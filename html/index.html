@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Brooks Brothers</title>
+      <link rel="icon" type="image/x-icon" href="../pictures/logo/logo.png" />
+      <link rel="stylesheet" href="../css/index.css" />
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      />
+  </head>
+
+  <body onload="displayCurrentUsername(),getNumofFav(),getNumItemsInCart()">
+    <div class="navBar">
+      <div id="leftNavBar">
+        <div id="showUserLeft">
+          <label id="userName"></label>
+        </div>
+        <div id="login">
+          <a href="../html/Login.html"class="navbarBtn">
+            <img
+              src="../pictures/logo/user_1077063.png"
+              id="imgIconNavBar"
+              alt="icon"
+              style="width: 20px; height: 20px; vertical-align: middle"
+            />
+          </a>
+          <a id="cmdNav" href="../html/Login.html">Login</a>
+        </div>
+        <div id="liked">
+          <a href="../html/Liked.html"class="navbarBtn">
+            <img
+              src="../pictures/logo/heart_744635.png"
+              id="imgIconNavBar"
+              alt="icon"
+              style="width: 20px; height: 20px; vertical-align: middle"
+            /></a>
+          <a id="cmdNav" href="../html/Liked.html" class="navbarBtn">Liked</a>
+          <label id="favNum">(0)</label>
+        </div>
+        <div id="checkout">
+          <a href="../html/Checkout.html"class="navbarBtn">
+            <img
+              src="../pictures/logo/bag_535280.png"
+              id="imgIconNavBar"
+              alt="icon"
+              style="width: 20px; height: 20px; vertical-align: middle"
+            />
+          </a>
+          <a id="cmdNav" href="../html/Checkout.html"class="navbarBtn">Shopping Bag</a>
+          <label id="NumItemsInCart">(0)</label>
+        </div>
+      </div>
+      <div id="centerNavBar">
+        <a href="../html/index.html">
+          <img src="../pictures/logo/logo.png" id="imgLogo" />
+        </a>
+      </div>
+      <div id="rightNavBar">
+
+        <div id="customerService">
+          <a href="../html/Customer-Service.html">
+            <img
+            src="../pictures/logo/call-center-agent_3980744.png"
+            style="width: 20px; height: 20px; vertical-align: middle">
+          </a>
+          <a href="../html/Customer-Service.html"class="navbarBtn">Customer Service</a>
+        </div>
+
+
+        <div id="listOfShop">
+          <a href="../html/List-Of-Shop.html"></a>
+            <img
+            src="../pictures/logo/map_470811.png"
+            style="width: 20px; height: 20px; vertical-align: middle">
+          </a>
+          <a  href="../html/List-Of-Shop.html"class="navbarBtn">List of Shop</a>
+        </div>
+
+
+        <div id="newsletterDiv">
+          <a href="#">
+            <img
+            src="../pictures/logo/email_4366373.png"
+            style="width: 20px; height: 20px; vertical-align: middle">
+          </a>
+          <a id="newsletter-button" href="#">Newsletter</a>
+        </div>
+
+      </div>
+      <i class="fa-solid fa-bars menu-icon" onclick="toggleSidebar()"></i>
+    </div>
+    <div class="sidebar" id="sidebar">
+      <button class="close-btn" onclick="toggleSidebar()">×</button>
+      <ul>
+        <li><a href="./Customer-Service.html" id="cmdNavBarMenu">Customer Service</a></li>
+        <li><a href="./List-Of-Shop.html" id="cmdNavBarMenu">List of Shop</a></li>
+        <li><a href="#" id="newsletter-button">Newsletter</a></li>
+      </ul>
+    </div>
+    <!-- newsletterModal -->
+    <div id="newsletter-modal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Sign up for the H&M newsletter</h2>
+          <p>
+            Sign up for the H&M newsletter and you will receive all discount to
+            your mail.
+          </p>
+          <form id="newsletter-form">
+            <label id="labelEmail"for="inputEmail" class="ltr-label">Email address:</label>
+            <input type="email"  id="inputEmail" name="email" required/>
+
+            <label id="labelCountry" for="country-code">Select a country:</label>
+            <select id="country-code" name="country-code" required>
+              <option value="+972">Israel (+972)</option>
+              <option value="+1">United States (+1)</option>
+              <option value="+44">UK (+44)</option>
+              <option va.lue="+33">France (+33)</option>
+            </select>
+            <label id="labelPhone"for="inputPhone">Phone number:</label>
+            <input id="inputPhone"type="tel"id="phone"name="phone"requiredplaceholder="Enter a phone number"/>
+            <label id="labelBirth" for="inputBirthday">Date of birth:</label>
+            <input id="inputBirthday"type="date"id="birthdate"name="birthdate"/>
+            <button id="buttonSub" type="submit">Register now</button>
+          </form>
+        </div>
+      </div>
+    <!-- --------------------------- -->
+    <div class="video-container">
+      <video
+        autoplay
+        loop
+        muted="false"
+        playsinline
+        style="
+          display: block;
+          width: 100%;
+          height: 500px;
+          object-fit: cover;
+          margin: 0;
+        "
+      >
+        <source src="../vid/vid.mp4" type="video/mp4" />
+        הדפדפן שלך אינו תומך בווידאו.
+      </video>
+
+      <!-- הוספת המלל והכפתור מעל הסרטון -->
+      <div class="text-container video-text">
+        <h1 class="main-title">Brooks Brothers</h1>
+        <p class="sub-title">Luxury Clothing for Men, Women & Kids</p>
+        <a href="../html/Store.html" class="shop-button">Shop now</a>
+      </div>
+    </div>
+
+    <br /><br /><br />
+
+    <!-------------------------------------------------------------------------- -->
+    <div class="image-container">
+      <!-- התמונה של החולצה -->
+      <img
+        src="../pictures/shop shirt.jpg"
+        alt="Shirt Image"
+        class="shirt-image"
+      />
+
+      <!-- המלל והכפתור על התמונה של החולצה -->
+      <div class="text-container">
+        <h1 class="main-title">The Brooks Brothers Shirt</h1>
+        <p class="sub-title">
+          We’re the original source for the best dress and sport shirts, period.
+        </p>
+
+        <a href="../html/Store.html?category=Shirt" class="shop-button"
+          >Shop Shirts</a
+        >
+      </div>
+    </div>
+
+    <br /><br />
+
+    <div class="product-row">
+      <!-- חצי עמוד עם תמונת החליפה -->
+      <div class="half-page image-container">
+        <img
+          src="../pictures/shop suit.jpg"
+          alt="Suit Image"
+          class="suit-image"
+        />
+
+        <!-- המלל והכפתור על התמונה של החליפה -->
+        <div class="text-container">
+          <h1 class="main-title">The Brooks Brothers Suit</h1>
+          <p class="sub-title">
+            Tailored for Fall, Well-suited for every occasion.
+          </p>
+
+          <a href="../html/Store.html?category=suits" class="shop-button"
+            >Shop Suits</a
+          >
+        </div>
+      </div>
+
+      <!-- חצי עמוד נוסף עבור התמונה של המכנסיים -->
+      <div class="half-page image-container">
+        <img
+          src="../pictures/shop pans.jpg"
+          alt="Pants Image"
+          class="pants-image"
+        />
+
+        <!-- המלל והכפתור על התמונה של המכנסיים -->
+        <div class="text-container">
+          <h1 class="main-title">The Richmond Pant</h1>
+          <p class="sub-title">
+            Your elevated casual pair for fall: luxe five-pocket.
+          </p>
+
+          <a href="../html/Store.html?category=Pants" class="shop-button"
+            >Shop Pants</a
+          >
+        </div>
+      </div>
+    </div>
+    <br /><br />
+    <div class="image-container">
+      <!--  Accessoriesהתמונה של  -->
+      <img
+        src="../pictures/Accessories.jpg"
+        alt="accessories Image"
+        class="accessories-image"
+      />
+
+      <!-- המלל והכפתור על התמונה של החולצה -->
+      <div class="text-container">
+        <h1 class="main-title">The Brooks Brothers Accessories</h1>
+        <p class="sub-title">
+          We’re the original for the best Accessories , period.
+        </p>
+
+        <a href="../html/Store.html?category=accesories" class="shop-button"
+          >Shop Accessories</a
+        >
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><script src="../javaScript/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,403 @@
+body {
+  margin: 0;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  color: black;
+}
+#leftNavBar,
+#rightNavBar {
+  display: flex;
+  align-items: center;
+}
+
+#centerNavBar {
+  text-align: center;
+}
+
+#centerNavBar img {
+  width: 100px;
+}
+
+#cmdNav {
+  color: black;
+  margin: 5px;
+}
+#cmdNav:hover{
+  color: black;
+  margin: 5px;
+  text-decoration: underline;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 24px;
+  color: black;
+  cursor: pointer;
+}
+
+.sidebar {
+  display: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #333;
+  padding-top: 60px;
+  z-index: 1000;
+  transform: translateX(100%); /* mask the side bar */
+  transition: transform 0.3s ease-in-out;
+}
+.sidebar.open {
+  transform: translateX(0); 
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.close-btn:focus {
+  outline: none;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+}
+#nbFav {
+  position: absolute;
+  top: -5px;
+  right: 28px;
+  border-radius: 100px;
+  background-color: #e5757f;
+}
+
+/* Media Query for littler screen */
+@media (max-width: 1299px) {
+  #userName {
+    text-align: center;
+  }
+  #cmdNav {
+    display: none;
+  }
+  #imgIconNavBar,#centerNavBar {
+    display: inline; 
+  }
+  a#newsletter-button{
+    color: white;
+  }
+  .navBar {
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
+
+  #rightNavBar {
+    display: none;
+  }
+  .menu-icon {
+    display: block;
+  }
+
+  .sidebar {
+    color: white;
+  }
+
+  .sidebar.open {
+    display: block;
+  }
+}
+
+/* Media Query for bigger screen */
+@media (min-width: 1300px) {
+  .sidebar {
+    display: none;
+  }
+  .menu-icon {
+    display: none;
+  }
+  .fa-solid.fa-bars.menu-icon {
+    display: none;
+  }
+  a#newsletter-button{  
+    color: black;
+  }
+}
+#checkout,#liked,#login, #userName {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  font-size: large;
+}
+#liked:hover,#checkout:hover,#login:hover{
+  text-decoration: underline;
+}
+#customerService:hover,#listOfShop:hover,#newsletterDiv:hover{
+  text-decoration: underline;
+}
+a.navbarBtn{
+  color: black;
+}
+
+#customerService,#listOfShop,#newsletterDiv{
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  color: black;
+  text-decoration: none;
+  font-size: large;
+}
+
+/* category ---------------------------------*/
+#category {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+#category img {
+  width: 100%; /* img takes all the width of container */
+  height: 100%; /* img takes all the height of container */
+  object-fit: cover;
+}
+.buttonSortCategory {
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+#descriptionCategories {
+  transform: translate(0%, -650%);
+  font-family: bold;
+  justify-content: center;
+  text-align: center;
+  font-size: xx-large;
+  color: gold;
+}
+.categories {
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 35%;
+  height: 80%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+a {
+  display: contents;
+}
+/* ----------------------- */
+/*for the current username display */
+#displayUsername {
+  position: fixed;
+  top: 20px;
+  right: 80px; 
+  font-size: 16px; 
+  color: #333;
+  font-weight: bold;
+  background-color: #fff;
+  padding: 8px 12px; 
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+
+@media (max-width: 768px) {
+  #displayUsername {
+    font-size: 14px; 
+    padding: 6px 10px; 
+  }
+}
+
+@media (max-width: 480px) {
+  #displayUsername {
+    font-size: 12px; 
+    padding: 4px 8px; 
+  }
+}
+/* ------------------------------------------------------- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close {
+  color: #aaa;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+#newsletter-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#labelEmail,
+#labelCountry,
+#labelPhone,
+#labelBirth {
+  display: flex;
+  justify-content: flex-start;
+}
+#buttonSub {
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+}
+#buttonSub:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  padding: 8px;
+}
+#inputEmail,
+#country-code,
+#inputPhone,
+#inputBirthday {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* ---------------------------------עיצוב תמונות בעמוד הראשי---------------------- */
+/* עיצוב כללי לתמונות בעמוד הראשי */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.shirt-image{
+  width: 100%;
+}
+.suit-image,
+.pants-image {
+  width: 100%;
+  height: auto; /* התאמה אוטומטית לגובה התמונה */
+  object-fit: contain; /* שמירה על התמונה בשלמותה מבלי לחתוך */
+}
+
+/* עיצוב חלוקה לשני חצאים */
+.product-row {
+  display: flex;
+  justify-content: space-between; /* שמירה על סימטריה */
+  width: 100%;
+}
+
+.half-page {
+  width: 48%; /* התאמה ל-48% כדי לשמור מרחק סימטרי מהשוליים */
+  position: relative;
+}
+
+/* עיצוב המלל והכפתור על התמונה */
+.text-container {
+  position: absolute; /* מיקום מוחלט כדי להישאר על התמונה */
+  bottom: 40%; /* מיקום המלל והכפתור בתחתית התמונה */
+  left: 30%;
+  color: white;
+  text-align: center;
+  width: 80%;
+}
+
+.main-title {
+  font-size: xx-large;
+  margin: 0;
+}
+
+.sub-title {
+  font-size: large;
+  margin: 10px 0;
+}
+.button-on-video {
+  position: absolute;
+  top: 50%; /* מיקום הכפתור במרכז אנכית */
+  left: 5%; /* מיקום הכפתור בצד שמאל */
+  transform: translateY(-50%); /* לשמירה על מיקום מדויק */
+}
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.video-text {
+  position: absolute;
+  top: 50%; /* מיקום המלל והכפתור במרכז אנכית */
+  left: 10%; /* מיקום המלל בצד שמאל */
+  transform: translateY(-50%); /* יישור למרכז אנכית */
+  color: white; /* המלל בצבע לבן */
+  text-align: left;
+  font-weight: bold; /* המלל יהיה מודגש */
+}
+
+/* הכפתור עצמו */
+.shop-button {
+  padding: 1% 2%; /* ריווח פנימי גדול יותר */
+  background-color: white; 
+  color: black; 
+  border: 2px solid black; 
+  font-size: 1rem; /* גודל טקסט גדול יותר */
+  text-transform: uppercase; /* אותיות גדולות */
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease; /* מעבר חלק בעת הרחפת העכבר */
+  display: inline-block;
+  font-family: "Helvetica", sans-serif; 
+}
+
+.accessories-image {
+  width: 100%; 
+  max-height: 500px; /* הגבלת גובה התמונה ל-500 פיקסלים (תוכל לשנות בהתאם לצורך) */
+  object-fit: cover; /* התאמת התמונה כך שתכסה את השטח מבלי לחתוך אותה */
+}
