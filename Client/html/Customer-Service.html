@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Brooks Brothers</title>
+            <link rel="icon" type="image/x-icon" href="../pictures/logo/logo.png" />
+            <link rel="stylesheet" href="../css/customerService.css">
+            <script src="../javaScript/customerService.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+     </head> 
+     <body onload=" displayCurrentUsername(),getNumofFav(),getNumItemsInCart()">
+      <div class="navBar">
+        <div id="leftNavBar">
+          <div id="showUserLeft">
+            <label id="userName"></label>
+          </div>
+          <div id="login">
+            <a href="../html/Login.html"class="navbarBtn">
+              <img
+                src="../../pictures/logo/user_1077063.png"
+                id="imgIconNavBar"
+                alt="icon"
+                style="width: 20px; height: 20px; vertical-align: middle"
+              />
+            </a>
+            <a id="cmdNav" href="../html/Login.html">Login</a>
+          </div>
+          <div id="liked">
+            <a href="../html/Liked.html"class="navbarBtn">
+              <img
+                src="../../pictures/logo/heart_744635.png"
+                id="imgIconNavBar"
+                alt="icon"
+                style="width: 20px; height: 20px; vertical-align: middle"
+              /></a>
+            <a id="cmdNav" href="../html/Liked.html" class="navbarBtn">Liked</a>
+            <label id="favNum">(0)</label>
+          </div>
+          <div id="checkout">
+            <a href="../html/Checkout.html"class="navbarBtn">
+              <img
+                src="../../pictures/logo/bag_535280.png"
+                id="imgIconNavBar"
+                alt="icon"
+                style="width: 20px; height: 20px; vertical-align: middle"
+              />
+            </a>
+            <a id="cmdNav" href="../html/Checkout.html"class="navbarBtn">Shopping Bag</a>
+            <label id="NumItemsInCart"></label>
+          </div>
+        </div>
+        <div id="centerNavBar">
+          <a href="../html/index.html">
+            <img src="../../pictures/logo/logo.png" id="imgLogo" />
+          </a>
+        </div>
+        <div id="rightNavBar">
+  
+          <div id="customerService">
+            <a href="../html/Customer-Service.html">
+              <img
+              src="../../pictures/logo/call-center-agent_3980744.png"
+              style="width: 20px; height: 20px; vertical-align: middle">
+            </a>
+            <a href="../html/Customer-Service.html"class="navbarBtn">Customer Service</a>
+          </div>
+  
+  
+          <div id="listOfShop">
+            <a href="../html/List-Of-Shop.html"></a>
+              <img
+              src="../../pictures/logo/map_470811.png"
+              style="width: 20px; height: 20px; vertical-align: middle">
+            </a>
+            <a  href="../html/List-Of-Shop.html"class="navbarBtn">List of Shop</a>
+          </div>
+  
+  
+          <div id="newsletterDiv">
+            <a href="#">
+              <img
+              src="../../pictures/logo/email_4366373.png"
+              style="width: 20px; height: 20px; vertical-align: middle">
+            </a>
+            <a id="newsletter-button" href="#">Newsletter</a>
+          </div>
+  
+        </div>
+        <i class="fa-solid fa-bars menu-icon" onclick="toggleSidebar()"></i>
+      </div>
+      <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <ul>
+          <li><a href="./Customer-Service.html" id="cmdNavBarMenu">Customer Service</a></li>
+          <li><a href="./List-Of-Shop.html" id="cmdNavBarMenu">List of Shop</a></li>
+          <li><a href="#" id="newsletter-button">Newsletter</a></li>
+        </ul>
+      </div>
+    <!-- newsletterModal -->
+    <div id="newsletter-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Sign up for the H&M newsletter</h2>
+            <p>Sign up for the H&M newsletter and you will receive all discount to your mail.</p>
+            <form id="newsletter-form">
+              <label id="labelEmail"for="inputEmail" class="ltr-label">Email address:</label>
+              <input type="email"  id="inputEmail" name="email" required/>
+  
+              <label id="labelCountry" for="country-code">Select a country:</label>
+              <select id="country-code" name="country-code" required>
+                <option value="+972">Israel (+972)</option>
+                <option value="+1">United States (+1)</option>
+                <option value="+44">UK (+44)</option>
+                <option va.lue="+33">France (+33)</option>
+              </select>
+              <label id="labelPhone"for="inputPhone">Phone number:</label>
+              <input id="inputPhone"type="tel"id="phone"name="phone"requiredplaceholder="Enter a phone number"/>
+              <label id="labelBirth" for="inputBirthday">Date of birth:</label>
+              <input id="inputBirthday"type="date"id="birthdate"name="birthdate"/>
+              <button id="buttonSub" type="submit">Register now</button>
+            </form>
+        </div>
+    </div>
+    <!-- --------------------------- -->
+        
+        <div id="textCustomerServices">
+            <h1>Welcome to Customer Service</h1>
+            <h2>How can we help you today?</h2>
+        </div>
+        <div id="box">
+            <div id="boxReturns" class="boxCustomerServices">
+                <img src="../../pictures/logo/undo_734524.png" id="imgCustomerService">
+                <a href="returns.html">Returns</a>
+            </div>
+            <div id="boxPayments" class="boxCustomerServices">
+                <img src="../../pictures/logo/credit-card_3609227.png" id="imgCustomerService">
+                <a href="payments.html">Payment method</a>
+            </div>
+            <div id="boxContactUs" class="boxCustomerServices">
+                <img src="../../pictures/logo/phone_1230180.png" id="imgCustomerService">
+                <a href="ContactUs.html">Contact Us</a>
+            </div>
+        </div>
+    
+        <div id="openingHours">
+            <p> 
+            You Can Contact us by phone to +972545614310 24/6 (except saturday)<br><br>
+            The customer service is avaible by Phone or Whatsapp<br><br>
+            <a id="linkWhatsapp" href="https://wa.me/972500000000">Send a Whatsapp</a><br><br>
+            <a id="linkMail"href="mailto:your.email@example.com">Send us an email</a>
+            </p>    
+            
+        </div>
+     
+    
+</body>
+
+</html>
