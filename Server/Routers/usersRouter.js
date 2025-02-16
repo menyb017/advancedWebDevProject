@@ -1,0 +1,47 @@
+const express = require("express");
+const usersService = require("../Services/usersService.js");
+const router = express.Router();
+
+router.post("/addUser", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const userExists = await usersService.checkIfUserInDb(username);
+    if (userExists) {
+      return res
+        .status(409)
+        .json({ message: "The user already exists in DB!" });
+    }
+
+    await usersService.addUserToDB(username, password);
+    return res
+      .status(200)
+      .json({ message: "User has been successfully added to DB!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error adding user");
+  }
+});
+
+router.post("/authenticateUser", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const userValid = await usersService.authenticateUser(username, password);
+    const superAdminValid = await usersService.authenticateSuperAdmin(username, password);
+    if (superAdminValid) {
+      return res.status(200).json({ message: "Super Admin authenticated"});
+      return res.redirect("../../html/addItemsToDb.html");
+    }
+    if (userValid) {
+      return res.status(200).json({ message: "User authenticated" });
+    } else {
+      return res.status(400).json({ message: "Invalid user or password!" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error authenticating user");
+  }
+});
+
+module.exports = router;

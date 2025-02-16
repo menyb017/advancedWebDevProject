@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brooks Brothers</title>
+    <link rel="icon" type="image/x-icon" href="../pictures/logo/logo.png" />
+    <link rel="stylesheet" href="../css/listOfShop.css" />
+    <script src="../javaScript/listofshop.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  </head>
+  <body onload="displayCurrentUsername(),getNumofFav(),getNumItemsInCart()">
+    <div class="navBar">
+      <div id="leftNavBar">
+        <div id="showUserLeft">
+          <label id="userName"></label>
+        </div>
+        <div id="login">
+          <a href="../html/Login.html"class="navbarBtn">
+            <img
+              src="../../pictures/logo/user_1077063.png"
+              id="imgIconNavBar"
+              alt="icon"
+              style="width: 20px; height: 20px; vertical-align: middle"
+            />
+          </a>
+          <a id="cmdNav" href="../html/Login.html">Login</a>
+        </div>
+        <div id="liked">
+          <a href="../html/Liked.html"class="navbarBtn">
+            <img
+              src="../../pictures/logo/heart_744635.png"
+              id="imgIconNavBar"
+              alt="icon"
+              style="width: 20px; height: 20px; vertical-align: middle"
+            /></a>
+          <a id="cmdNav" href="../html/Liked.html" class="navbarBtn">Liked</a>
+          <label id="favNum">(0)</label>
+        </div>
+        <div id="checkout">
+          <a href="../html/Checkout.html"class="navbarBtn">
+            <img
+              src="../../pictures/logo/bag_535280.png"
+              id="imgIconNavBar"
+              alt="icon"
+              style="width: 20px; height: 20px; vertical-align: middle"
+            />
+          </a>
+          <a id="cmdNav" href="../html/Checkout.html"class="navbarBtn">Shopping Bag</a>
+          <label id="NumItemsInCart"></label>
+        </div>
+      </div>
+      <div id="centerNavBar">
+        <a href="../html/index.html">
+          <img src="../../pictures/logo/logo.png" id="imgLogo" />
+        </a>
+      </div>
+      <div id="rightNavBar">
+
+        <div id="customerService">
+          <a href="../html/Customer-Service.html">
+            <img
+            src="../../pictures/logo/call-center-agent_3980744.png"
+            style="width: 20px; height: 20px; vertical-align: middle">
+          </a>
+          <a href="../html/Customer-Service.html"class="navbarBtn">Customer Service</a>
+        </div>
+
+
+        <div id="listOfShop">
+          <a href="../html/List-Of-Shop.html"></a>
+            <img
+            src="../../pictures/logo/map_470811.png"
+            style="width: 20px; height: 20px; vertical-align: middle">
+          </a>
+          <a  href="../html/List-Of-Shop.html"class="navbarBtn">List of Shop</a>
+        </div>
+
+
+        <div id="newsletterDiv">
+          <a href="#">
+            <img
+            src="../../pictures/logo/email_4366373.png"
+            style="width: 20px; height: 20px; vertical-align: middle">
+          </a>
+          <a id="newsletter-button" href="#">Newsletter</a>
+        </div>
+
+      </div>
+      <i class="fa-solid fa-bars menu-icon" onclick="toggleSidebar()"></i>
+    </div>
+    <div class="sidebar" id="sidebar">
+      <button class="close-btn" onclick="toggleSidebar()">×</button>
+      <ul>
+        <li><a href="./Customer-Service.html" id="cmdNavBarMenu">Customer Service</a></li>
+        <li><a href="./List-Of-Shop.html" id="cmdNavBarMenu">List of Shop</a></li>
+        <li><a href="#" id="newsletter-button">Newsletter</a></li>
+      </ul>
+    </div> 
+    <!-- newsletterModal -->
+    <div id="newsletter-modal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Sign up for the H&M newsletter</h2>
+          <p>Sign up for the H&M newsletter and you will receive all discount to your mail.</p>
+          <form id="newsletter-form">
+            <label id="labelEmail"for="inputEmail" class="ltr-label">Email address:</label>
+            <input type="email"  id="inputEmail" name="email" required/>
+
+            <label id="labelCountry" for="country-code">Select a country:</label>
+            <select id="country-code" name="country-code" required>
+              <option value="+972">Israel (+972)</option>
+              <option value="+1">United States (+1)</option>
+              <option value="+44">UK (+44)</option>
+              <option va.lue="+33">France (+33)</option>
+            </select>
+            <label id="labelPhone"for="inputPhone">Phone number:</label>
+            <input id="inputPhone"type="tel"id="phone"name="phone"requiredplaceholder="Enter a phone number"/>
+            <label id="labelBirth" for="inputBirthday">Date of birth:</label>
+            <input id="inputBirthday"type="date"id="birthdate"name="birthdate"/>
+            <button id="buttonSub" type="submit">Register now</button>
+          </form>
+      </div>
+  </div>
+  <!-- --------------------------- -->
+    <h1 id="texth1">Find a store</h1>
+    <div id="contentContainer">
+      <div id="mapContainer">
+        <img src="../../pictures/map.jpg" alt="Map" id="map" />
+        <!-- תל אביב -->
+        <div
+          class="branch"
+          id="branch1"
+          style="top: 35%; left: 55%"
+          onclick="highlightBranch('branch1')"
+        ></div>
+        <!-- חיפה -->
+        <div
+          class="branch"
+          id="branch2"
+          style="top: 15%; left: 58%"
+          onclick="highlightBranch('branch2')"
+        ></div>
+        <!-- ירושלים -->
+        <div
+          class="branch"
+          id="branch3"
+          style="top: 40%; left: 55%"
+          onclick="highlightBranch('branch3')"
+        ></div>
+        <!-- באשר שבע  -->
+        <div
+          class="branch active"
+          id="branch4"
+          style="top: 55%; left: 55%"
+          onclick="highlightBranch('branch4')"
+        ></div>
+        <!-- אשדוד -->
+        <div
+          class="branch"
+          id="branch5"
+          style="top: 40%; left: 48%"
+          onclick="highlightBranch('branch5')"
+        ></div>
+      </div>
+      <div id="branchList">
+        <ul>
+          <li id="listBranch1" onclick="highlightBranch('branch1')">
+            <strong>סניף תל אביב</strong><br />
+            רחוב דיזנגוף 100, תל אביב<br />
+            שעות פתיחה: א-ה 9:00-19:00
+          </li>
+          <li id="listBranch2" onclick="highlightBranch('branch2')">
+            <strong>סניף חיפה</strong><br />
+            רחוב הרצל 50, חיפה<br />
+            שעות פתיחה: א-ה 9:00-19:00
+          </li>
+          <li id="listBranch3" onclick="highlightBranch('branch3')">
+            <strong>סניף ירושלים</strong><br />
+            רחוב יפו 200, ירושלים<br />
+            שעות פתיחה: א-ה 9:00-19:00
+          </li>
+          <li id="listBranch4" onclick="highlightBranch('branch4')">
+            <strong>סניף באר שבע</strong><br />
+            רחוב רגר 15, באר שבע<br />
+            שעות פתיחה: א-ה 9:00-19:00
+          </li>
+          <li id="listBranch5" onclick="highlightBranch('branch5')">
+            <strong>סניף אשדוד</strong><br />
+            רחוב הרצל 10, אשדוד<br />
+            שעות פתיחה: א-ה 9:00-19:00
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
