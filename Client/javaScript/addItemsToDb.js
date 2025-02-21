@@ -1,4 +1,4 @@
-document.getElementById('addItemForm').addEventListener('submit', async function(event) {
+document.getElementById('addproductTodb').addEventListener('submit', async function(event) {
     event.preventDefault();
     var category = document.getElementById('itemCategory').value;
     var id= document.getElementById('itemId').value;
@@ -7,7 +7,8 @@ document.getElementById('addItemForm').addEventListener('submit', async function
     var Price = document.getElementById('itemPrice').value;
     var Quantity = document.getElementById('itemQuantity').value;
     var Image = document.getElementById('itemImage').value;
-    const response = await fetch('http://localhost:8080/add-item', {
+
+    const response = await fetch('http://localhost:8080/products/addProduct', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -21,3 +22,27 @@ document.getElementById('addItemForm').addEventListener('submit', async function
 
 //todo add a function to delet a product to the database
 //todo add a function to update a product to the database
+
+async function displayUsers() {
+    const response = await fetch('http://localhost:8080/users');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const users = await response.json();
+    const userContainer = document.getElementById('usersContainer');
+    const usersList = document.createElement('select');
+    usersList.id = 'usersList';
+
+    users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.username;
+        option.textContent = user.username;
+        usersList.appendChild(option);
+    });
+
+    userContainer.innerHTML = '';
+    userContainer.appendChild(usersList);
+}
+
+// Appelez la fonction displayUsers pour remplir le select au chargement de la page
+document.addEventListener('DOMContentLoaded', displayUsers);

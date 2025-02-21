@@ -40,5 +40,14 @@ async function addUserToDB(username, password) {
     password: hashedPassword,
   });
 }
-
-module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin };
+async function getAllUsers() {
+  try {
+    const dbUsers = dbConnection.getDB();
+    const users = await dbUsers.collection("users").find().toArray();
+    return users;
+  } catch (error) {
+    console.error("Error retrieving users:", error);
+    throw error;
+  }
+}
+module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin, getAllUsers };
