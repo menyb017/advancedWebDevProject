@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const dbConnection = require("./dbConnection.js");
-const productRouter = require("./Routers/productRouter.js");
+const productRouter = require("../Server/Routers/productRouter.js");  
 const usersRouter = require("./Routers/usersRouter.js");
 const port = 8080;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+app.use(usersRouter);
 dbConnection
   .connectToDB()
   .then(() => {

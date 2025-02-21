@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/addItemsToDb.css">
     <script src="../javaScript/addItemsToDb.js" defer></script>
 </head>
-<body>
+<body onload="displayUsers()">
     <div class="navBar">
         <div id="leftNavBar">
           <div id="showUserLeft">
@@ -122,7 +122,7 @@
   </div>
     
  <h1>Add Items to Database</h1><br>
-    <form method="post" id="addItemForm" >
+    <form id="addproductTodb" method="post" >  
         <label for="itemCategory">Item Category:</label>
         <select id="itemCategory" name="itemCategory" required>
             <option 1="Suits">Suits</option>
@@ -152,6 +152,18 @@
 
         <button type="submit" id="addItemSubmit">Add Item</button>
     </form>
+    <br>
+<h1>Modify the User data Base</h1><br>
+  <form method="post" id="modifyTheUserDb" >
+      <label>Select Users:</label>
+      <div id="usersContainer">
+        <select id="usersSelect" name="usersSelect" required>
+          <option value="0">Select User</option>
+        </select>
+      </div>
+
+      <button type="submit" id="modifyDB">Modify Db</button>
+  </form>
 </body>
 </html>
 
