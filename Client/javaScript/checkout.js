@@ -194,6 +194,7 @@ const displayProducts = (productsToDisplay = cart) => {
     container.appendChild(productImg);
     container.appendChild(textContainer);
     displayProd.appendChild(container);
+    selectSize.id = product.id + "selectSize"; // name the select whit the id of the item
     selectSize.appendChild(optionOfSelectSizeChoose); //default Option
     selectSize.appendChild(optionOfSelectSizeS); //add the option S to xl in the select
     selectSize.appendChild(optionOfSelectSizeM);
@@ -328,6 +329,27 @@ function FunctFinalPurshass() {
   message += `Total: ${sum + 5}$\nWe hope to see you again soon!`;
   alert(message);
 }
+
+
+function FuncAddOrderToDb() {
+  let length=document .localStorage("cart").length;
+  let arrayItems=localStorage.getItem("cart");
+  for(let i=0;i<length;i++){
+      arrayItems[i].quantity+=document.getElementById(arrayItems[i].id + "selectNumItems").value;
+      arrayItems[i].size+=document.getElementById(arrayItems[i].id + "selectSize").value;
+  }
+
+  let items = JSON.parse(localStorage.getItem("cart")) || [];
+  const name = document.getElementById("nameInput").value;
+  const cardNumber = document.getElementById("cardNumberInput").value;
+  const cardExpiration = document.getElementById("expirationInput").value;
+  const cardCVV = document.getElementById("cvvInput").value;
+  fetch("http://localhost:8080/products/order", {
+    method:"POST",
+    headers: {"Content-Type": "application/json" },
+    body: JSON.stringify({arrayItems:arrayItems, Name:name, CardNumber:cardNumber, CardExpiration:cardExpiration, CardCVV:cardCVV}),
+  });
+}
 function clearCart() {
   //clear the localstorage to delete the elements from  this page after payment purshass
   localStorage.removeItem("cart");
@@ -336,5 +358,6 @@ function clearCart() {
 document.getElementById("paymentForm").addEventListener("submit", function () {
   //if the client click on final purshass call this 2 functionx
   FunctFinalPurshass();
+  FuncAddOrderToDb();
   clearCart();
 });
