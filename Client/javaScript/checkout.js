@@ -137,11 +137,11 @@ const displayProducts = (productsToDisplay = cart) => {
       const selectedQuantity = Number(selectNumItems.value);
 
       const cartItemIndex = cart.findIndex(
-        (item) => item.name === product.name
+        (item) => item.name === product.productName
       );
 
       if (cartItemIndex != -1) {
-        cart[cartItemIndex].quantity = selectedQuantity;
+        cart[cartItemIndex].itemQuantity = selectedQuantity;
 
         localStorage.setItem("cart", JSON.stringify(cart));
       }
@@ -160,26 +160,26 @@ const displayProducts = (productsToDisplay = cart) => {
       addToCart(product);
       getNumItemsInCart();
     });
-    selectNumItems.id = product.id + "selectNumItems"; // ?????
+    selectNumItems.productId = product.productId + "selectNumItems"; // ?????
     deleteToCardBtn.textContent = "🗑️";
     AddToFavBtn.textContent = "♥️";
     AddToFavBtn.className = "favBtn";
-    AddToFavBtn.id = product.name + "Btn"; //  ????
-    productImg.src = product.img;
+    AddToFavBtn.id = product.productName + "Btn"; //  ????
+    productImg.src = product.itemImage;
     productImg.className = "product-img";
 
     const textContainer = document.createElement("div");
     textContainer.className = "text-container";
 
     textContainer.innerHTML = `
-          <div>Name: ${product.name}</div>
-          <div>Price: ${product.price}$</div>
+          <div>Name: ${product.productName}</div>
+          <div>Price: ${product.productPrice}$</div>
       `;
     if (product.quantity < 10) {
       //?????
       textContainer.innerHTML = `
-        <div>Name: ${product.name}</div>
-        <div>Price: ${product.price}$</div>
+        <div>Name: ${product.productName}</div>
+        <div>Price: ${product.productPrice}$</div>
         <div>Quantity: The last ones! </div>
       `;
     }
@@ -208,7 +208,9 @@ function addToCart(product) {
   //add to the item to the cart
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   // check if the product is in the cart
-  const productExist = cart.find((item) => item.name === product.name);
+  const productExist = cart.find(
+    (item) => item.productName === product.productName
+  );
 
   if (!productExist) {
     cart.push(product);
@@ -218,7 +220,7 @@ function addToCart(product) {
     if (confirm("Do you want to delete this item from your cart ?")) {
       // למה לא משתמש בערך הבוליאני שחוזר???
       // User choose OK
-      cart = cart.filter((item) => item.name !== product.name); // DElete this element from favoris
+      cart = cart.filter((item) => item.productName !== product.productName); // DElete this element from favoris
       localStorage.setItem("cart", JSON.stringify(cart)); //updat the localStorage
       location.reload();
       getNumofFav();
@@ -232,19 +234,24 @@ function addOrDeleteTofavoritesItems(product) {
   // do the both thing add and delete the items from favorites
   let favoris = JSON.parse(localStorage.getItem("favoris")) || [];
   // check if the product is in the favorite
-  const productExist = favoris.find((item) => item.name === product.name);
+  const productExist = favoris.find(
+    (item) => item.productName === product.productName
+  );
 
   if (!productExist) {
     favoris.push(product);
     localStorage.setItem("favoris", JSON.stringify(favoris));
-    alert(product.name + " added to your favorites !");
-    document.getElementById(product.name + "Btn").style.color = "red";
+    alert(product.productName + " added to your favorites !");
+    document.getElementById(product.productName + "Btn").style.color = "red";
   } else {
     if (confirm("Do you want to delete this item from your favorite ?")) {
       // User choose OK
-      favoris = favoris.filter((item) => item.name !== product.name); // DElete this element from favoris
+      favoris = favoris.filter(
+        (item) => item.productName !== product.productName
+      ); // DElete this element from favoris
       localStorage.setItem("favoris", JSON.stringify(favoris)); //updat the localStorage
-      document.getElementById(product.name + "Btn").style.color = "black";
+      document.getElementById(product.productName + "Btn").style.color =
+        "black";
       location.reload();
       getNumofFav();
     } else {
@@ -280,12 +287,12 @@ function sumPriceItems() {
   let sum = 0;
   items.forEach((item) => {
     let quantity = Number(
-      document.getElementById(item.id + "selectNumItems").value
+      document.getElementById(item.productId + "selectNumItems").value
     ); //quantity of this items
     if (quantity === 1) {
-      sum += item.price;
+      sum += item.productPrice;
     } else {
-      sum += item.price * quantity;
+      sum += item.productPrice * quantity;
     }
   });
   document.getElementById("sumOfItems").innerHTML = sum + "$";
@@ -301,10 +308,10 @@ function FunctFinalPurshass() {
 
   items.forEach((item) => {
     const productIndex = originalProducts.findByIndex(
-      (product) => product.name === item.name
+      (product) => product.productName === item.productName
     );
     if (productIndex !== -1) {
-      originalProducts[productIndex].quantity -= item.quantity;
+      originalProducts[productIndex].itemQuantity -= item.itemQuantity;
     }
   });
   localStorage.setItem("products", JSON.stringify(originalProducts));
@@ -319,10 +326,12 @@ function FunctFinalPurshass() {
   let sum = 0;
   items.forEach((item, index) => {
     let quantity = Number(
-      document.getElementById(item.id + "selectNumItems").value
+      document.getElementById(item.productId + "selectNumItems").value
     );
-    message += `${quantity} ${item.name} ${item.price * quantity}$\n`;
-    sum += item.price * quantity;
+    message += `${quantity} ${item.productName} ${
+      item.productPrice * quantity
+    }$\n`;
+    sum += item.productPrice * quantity;
   });
   message += `Delivery Cost: 5$\n`;
   message += `Total: ${sum + 5}$\nWe hope to see you again soon!`;

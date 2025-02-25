@@ -3,6 +3,8 @@ function toggleSidebar() {
   sidebar.classList.toggle("open");
 }
 
+
+
 document.addEventListener("click", (event) => {
   const sidebar = document.getElementById("sidebar");
   const menuIcon = document.querySelector(".menu-icon");
@@ -11,13 +13,14 @@ document.addEventListener("click", (event) => {
   }
 });
 //--------------------------------------
-function displayCurrentUsername() {//display the name of the user in the navbar
+function displayCurrentUsername() {
+  //display the name of the user in the navbar
   const currentUser = localStorage.getItem("currentUser");
-  if(currentUser===null){
-    document.getElementById("userName").style.display="none";
-  }else{
-     document.getElementById("userName").innerText = `${currentUser}`;
-  }   
+  if (currentUser === null) {
+    document.getElementById("userName").style.display = "none";
+  } else {
+    document.getElementById("userName").innerText = `${currentUser}`;
+  }
 }
 
 function highlightBranch(branchId) {
@@ -38,67 +41,68 @@ function highlightBranch(branchId) {
   selectedListItem.classList.add("active");
 }
 // -----------------------------------------------------------
-function getNumofFav() {//display the number of favorites in the navbar
-  let favoris = localStorage.getItem('favoris');
+function getNumofFav() {
+  //display the number of favorites in the navbar
+  let favoris = localStorage.getItem("favoris");
   if (favoris) {
-      favoris = JSON.parse(favoris);
+    favoris = JSON.parse(favoris);
   } else {
-      favoris = []; 
+    favoris = [];
   }
   const len = favoris.length;
-  if(len===0){
-    document.getElementById('favNum').style.display="";
-  }else{
-    document.getElementById('favNum').innerHTML = "("+len+")";
+  if (len === 0) {
+    document.getElementById("favNum").style.display = "";
+  } else {
+    document.getElementById("favNum").innerHTML = "(" + len + ")";
   }
-
 }
 // ---------------------------------------------------------------
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   var modal = document.getElementById("newsletter-modal");
   var btn = document.getElementById("newsletter-button");
   var span = document.getElementsByClassName("close")[0];
 
-  btn.onclick = function() {
-     newFunction();
-      modal.style.display = "block";
+  btn.onclick = function () {
+    newFunction();
+    modal.style.display = "block";
 
     function newFunction() {
       event.preventDefault();
     }
-  }
+  };
 
-  span.onclick = function() {
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
       modal.style.display = "none";
-  }
-
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
+    }
+  };
 
   var form = document.getElementById("newsletter-form");
-  form.onsubmit = function(event) {
-      event.preventDefault();
-      alert("Thanks for signing up for the newsletter!");
-      modal.style.display = "none";
-  }
+  form.onsubmit = function (event) {
+    event.preventDefault();
+    alert("Thanks for signing up for the newsletter!");
+    modal.style.display = "none";
+  };
 });
 //--------------------------------------
-function getNumItemsInCart(){ //display the number of items in cart in the navbar
+function getNumItemsInCart() {
+  //display the number of items in cart in the navbar
 
-  let cart = localStorage.getItem('cart');
+  let cart = localStorage.getItem("cart");
   if (cart) {
     cart = JSON.parse(cart);
   } else {
-    cart = []; 
+    cart = [];
   }
   const len = cart.length;
-  if(len===0){
-    document.getElementById('NumItemsInCart').style.display="";
-  }else{
-    document.getElementById('NumItemsInCart').innerHTML =  "("+len+")";
+  if (len === 0) {
+    document.getElementById("NumItemsInCart").style.display = "";
+  } else {
+    document.getElementById("NumItemsInCart").innerHTML = "(" + len + ")";
   }
 }
 //--------------------------------------

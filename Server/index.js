@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dbConnection = require("./dbConnection.js");
-const productRouter = require("../Server/Routers/productRouter.js");  
+const productRouter = require("../Server/Routers/productRouter.js");
 const usersRouter = require("./Routers/usersRouter.js");
 const port = 8080;
 
