@@ -2,6 +2,21 @@ const express = require("express");
 const productService = require("../Services/productServices.js");
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  try {
+    const products = await productService.getAllProducts();
+
+    if (products?.length > 0) {
+      return res.status(200).json(products);
+    } else {
+      return res.status(404).send("No products found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching products");
+  }
+});
+
 router.post("/addProduct", async (req, res) => {
   const {
     itemCategory,
@@ -22,7 +37,7 @@ router.post("/addProduct", async (req, res) => {
     itemImage: itemImage,
   };
   try {
-    if ((await productService.checkIfinDb(product)) == 1) {
+    if ((await productService.checkIfinDb(product)) === 1) {
       res.status(409).send("Error: Product already exists in your db");
     } else {
       await productService.addProduct(product);
