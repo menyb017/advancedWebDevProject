@@ -1,5 +1,12 @@
 const dbConnection = require("../dbConnection.js");
 
+async function getAllProducts() {
+  const database = dbConnection.getDB();
+  const products = await database.collection("Products").find().toArray();
+  if (products.length > 0) return products;
+  else return null;
+}
+
 async function addProduct(product) {
   const database = dbConnection.getDB();
   await database.collection("Products").insertOne({
@@ -22,4 +29,4 @@ async function checkIfinDb(product) {
   return existingProduct !== null;
 }
 
-module.exports = { checkIfinDb, addProduct };
+module.exports = { checkIfinDb, addProduct, getAllProducts };

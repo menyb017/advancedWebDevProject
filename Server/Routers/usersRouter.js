@@ -2,6 +2,17 @@ const express = require("express");
 const usersService = require("../Services/usersService.js");
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  try {
+    const users = await usersService.getAllUsers();
+
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching users");
+  }
+});
+
 router.post("/addUser", async (req, res) => {
   const { username, password } = req.body;
 
@@ -28,9 +39,12 @@ router.post("/authenticateUser", async (req, res) => {
 
   try {
     const userValid = await usersService.authenticateUser(username, password);
-    const superAdminValid = await usersService.authenticateSuperAdmin(username, password);
+    const superAdminValid = await usersService.authenticateSuperAdmin(
+      username,
+      password
+    );
     if (superAdminValid) {
-      return res.status(200).json({ message: "Super Admin authenticated"});
+      return res.status(200).json({ message: "Super Admin authenticated" });
       return res.redirect("../../html/addItemsToDb.html");
     }
     if (userValid) {
@@ -51,5 +65,5 @@ router.get("/users", async (req, res) => {
   } catch (error) {
     res.status(500).send("Error getting users");
   }
-} );
+});
 module.exports = router;
