@@ -153,17 +153,26 @@
         <button type="submit" id="addItemSubmit">Add Item</button>
     </form>
     <br>
-<h1>Modify the User data Base</h1><br>
+<!-- delete user from data base -->
+<h1>Delete User from data Base</h1><br>
   <form method="post" id="modifyTheUserDb" >
-      <label>Select Users:</label>
+      <label>Select Users to delete:</label>
       <div id="usersContainer">
-        <select id="usersSelect" name="usersSelect" required>
-          <option value="0">Select User</option>
-        </select>
       </div>
 
-      <button type="submit" id="modifyDB">Modify Db</button>
+      <button type="submit" id="modifyDB">Delete from Db</button>
+
   </form>
+  <br>
+  <!-- delete item from data base -->
+
+  <h1>Delete Item from data Base</h1><br>
+  <form method="post" id="deleteProductFromdb" >
+    <label>Select product to delete:</label>
+      <div id="productsContainer">
+      </div>
+      <button type="submit" id="modifyDB">Delete Items from Db</button>
+    </form> 
 </body>
 </html>
 

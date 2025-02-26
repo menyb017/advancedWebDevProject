@@ -46,3 +46,74 @@ async function displayUsers() {
 
 // Appelez la fonction displayUsers pour remplir le select au chargement de la page
 document.addEventListener('DOMContentLoaded', displayUsers);
+
+async function displayProducts() {
+    const response = await fetch('http://localhost:8080/products');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const products = await response.json();
+    const productsContainer = document.getElementById('productsContainer');
+    const productsList = document.createElement('select');
+    productsList.id = 'productsList';
+
+    products.forEach(product => {
+        const option = document.createElement('option');
+        option.value =(product.productId);
+        option.textContent = ("name: "+product.productName) +" / id: "+product.productId;
+        productsList.appendChild(option);
+    });
+    productsContainer.innerHTML = '';
+    productsContainer.appendChild(productsList);
+}
+
+// Appelez la fonction displayProducts pour remplir le select au chargement de la page
+document.addEventListener('DOMContentLoaded', displayProducts);
+
+//send the value of the selected user to the server to delete it
+document.getElementById('modifyTheUserDb').addEventListener('submit', async function(event) {
+    const username = document.getElementById('usersList').value;
+    event.preventDefault();
+    try {
+        const response = await fetch(`http://localhost:8080/users/${username}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        alert('User deleted successfully');
+        displayUsers(); // Rafraîchir la liste des utilisateurs
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('Failed to delete user: ' + error.message);
+    }
+});
+
+//send the value of the selected product to the server to delete it
+document.getElementById('deleteProductFromdb').addEventListener('submit', async function(event) {
+    const productId = document.getElementById('productsList').value;
+    event.preventDefault();
+    try {
+        const response = await fetch(`http://localhost:8080/products/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        alert('Product deleted successfully');
+        displayProducts(); // Rafraîchir la liste des utilisateurs
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('Failed to delete product: ' + error.message);
+    }
+}   );  

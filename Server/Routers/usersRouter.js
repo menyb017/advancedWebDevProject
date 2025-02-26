@@ -66,4 +66,16 @@ router.get("/users", async (req, res) => {
     res.status(500).send("Error getting users");
   }
 });
+
+router.delete("/users/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    await usersService.deleteUser(username);
+    res.status(200).send("User deleted successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting user");
+  }
+});
+
 module.exports = router;

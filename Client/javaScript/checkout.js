@@ -130,26 +130,26 @@ const displayProducts = (productsToDisplay = cart) => {
     optionOfSelectNumItems4.value = "4";
     optionOfSelectNumItems4.textContent = "4";
 
-    //***********************************************************************************************************/
-    // updating chosen quantity into current item and updating the cart
+    // //***********************************************************************************************************/
+    // // updating chosen quantity into current item and updating the cart
 
-    selectNumItems.addEventListener("change", () => {
-      const selectedQuantity = Number(selectNumItems.value);
+    // selectNumItems.addEventListener("change", () => {
+    //   const selectedQuantity = Number(selectNumItems.value);
 
-      const cartItemIndex = cart.findIndex(
-        (item) => item.name === product.productName
-      );
+    //   const cartItemIndex = cart.findIndex(
+    //     (item) => item.name === product.productName
+    //   );
 
-      if (cartItemIndex != -1) {
-        cart[cartItemIndex].itemQuantity = selectedQuantity;
+    //   if (cartItemIndex != -1) {
+    //     cart[cartItemIndex].itemQuantity = selectedQuantity;
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
+    //     localStorage.setItem("cart", JSON.stringify(cart));
+    //   }
 
-      //ָָָָָָָָָָָָָָָָָ********************************************************************************************************
+    //   //ָָָָָָָָָָָָָָָָָ********************************************************************************************************
 
-      displayTotalCartItems();
-    });
+    //   displayTotalCartItems();
+    // });
 
     // -----------------------------------------------------------------
     AddToFavBtn.addEventListener("click", function () {
@@ -160,11 +160,12 @@ const displayProducts = (productsToDisplay = cart) => {
       addToCart(product);
       getNumItemsInCart();
     });
-    selectNumItems.productId = product.productId + "selectNumItems"; // ?????
+    selectNumItems.id = product.productId + "selectNumItems";
+    selectSize.id = product.productId + "selectSize";
     deleteToCardBtn.textContent = "🗑️";
     AddToFavBtn.textContent = "♥️";
     AddToFavBtn.className = "favBtn";
-    AddToFavBtn.id = product.productName + "Btn"; //  ????
+    AddToFavBtn.id = product.productName + "Btn"; 
     productImg.src = product.itemImage;
     productImg.className = "product-img";
 
@@ -284,19 +285,17 @@ document.addEventListener("change", function () {
 //-----------------------------------
 function sumPriceItems() {
   let items = JSON.parse(localStorage.getItem("cart")) || [];
-  let sum = 0;
+  var  sum = 0;
   items.forEach((item) => {
-    let quantity = Number(
-      document.getElementById(item.productId + "selectNumItems").value
-    ); //quantity of this items
+    let quantity = Number(document.getElementById(item.productId + "selectNumItems").value); //quantity of this items
     if (quantity === 1) {
-      sum += item.productPrice;
+      sum += Number(item.productPrice);
     } else {
       sum += item.productPrice * quantity;
     }
   });
   document.getElementById("sumOfItems").innerHTML = sum + "$";
-  document.getElementById("totalFinalCommande").innerHTML = sum + 5 + "$";
+  document.getElementById("totalFinalCommande").innerHTML = Number(sum + 5 )+ "$";
 }
 
 //--------------------------------------
