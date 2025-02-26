@@ -28,5 +28,8 @@ async function checkIfinDb(product) {
   });
   return existingProduct !== null;
 }
-
-module.exports = { checkIfinDb, addProduct, getAllProducts };
+async function deleteProduct(productId) {
+  const database = dbConnection.getDB();
+  await database.collection("Products").deleteOne({productId});
+}
+module.exports = { checkIfinDb, addProduct, getAllProducts, deleteProduct };

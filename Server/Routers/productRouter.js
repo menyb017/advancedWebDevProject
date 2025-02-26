@@ -48,5 +48,15 @@ router.post("/addProduct", async (req, res) => {
     res.status(500).send("Error adding product");
   }
 });
+router.delete("/:productId", async (req, res) => {
+  const { productId } = req.params;
+  try {
+    await productService.deleteProduct(productId);
+    res.status(200).send("Product deleted successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting product");
+  }
+});
 
 module.exports = router;

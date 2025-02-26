@@ -50,4 +50,13 @@ async function getAllUsers() {
     throw error;
   }
 }
-module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin, getAllUsers };
+async function deleteUser(username) {
+  try {
+    const dbUsers = dbConnection.getDB();
+    await dbUsers.collection("users").deleteOne({ username });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+}
+module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin, getAllUsers ,deleteUser};
