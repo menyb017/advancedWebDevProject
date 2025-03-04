@@ -186,10 +186,12 @@ document.getElementById("sort-by").addEventListener("change", ()=>{
   let category=getCategoryFromURL();
   if(category===null){
       displayProducts(sortProducts(productsArray));
+      updateFavButtonColors(productsArray);
   }else{
      let filterProducts=filterByCategory(category,productsArray);
     let sort=sortProducts(filterProducts);
     displayProducts(sort); 
+    updateFavButtonColors(sort);
   }
 
 });
@@ -198,34 +200,18 @@ document.getElementById("sort-by").addEventListener("change", ()=>{
 
 document.getElementById("filter-all-btn").addEventListener("click", () => {
   document.location.href = "store.html";
-  getNumofFav();
-  updateFavButtonColors();
-  getNumItemsInCart();  
-
 });
 document.getElementById("filter-shirts-btn").addEventListener("click", () => {
   document.location.href = "store.html?category=Shirts";
-  getNumofFav();
-  updateFavButtonColors();
-  getNumItemsInCart();  
 });
 document.getElementById("filter-pants-btn").addEventListener("click", () => {
-  document.location.href = "store.html?category=Pants";
-  getNumofFav();
-  updateFavButtonColors();
-  getNumItemsInCart();  
+  document.location.href = "store.html?category=Pants"; 
 });
 document.getElementById("filter-suits-btn").addEventListener("click", () => {
   document.location.href = "store.html?category=Suits";
-  getNumofFav();
-  updateFavButtonColors();
-  getNumItemsInCart();  
 });
 document.getElementById("filter-accessories-btn").addEventListener("click", () => {
     document.location.href = "store.html?category=Accessories"; 
-    getNumofFav();
-    updateFavButtonColors();
-    getNumItemsInCart();  
   });
 
 
