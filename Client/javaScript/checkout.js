@@ -195,7 +195,6 @@ const displayProducts = (productsToDisplay = cart) => {
     container.appendChild(productImg);
     container.appendChild(textContainer);
     displayProd.appendChild(container);
-    selectSize.id = product.id + "selectSize"; // name the select whit the id of the item
     selectSize.appendChild(optionOfSelectSizeChoose); //default Option
     selectSize.appendChild(optionOfSelectSizeS); //add the option S to xl in the select
     selectSize.appendChild(optionOfSelectSizeM);
