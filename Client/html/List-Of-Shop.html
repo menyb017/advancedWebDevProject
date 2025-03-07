@@ -125,44 +125,55 @@
   <!-- --------------------------- -->
     <h1 id="texth1">Find a store</h1>
     <div id="contentContainer">
-      <div id="mapContainer">
-        <img src="../../pictures/map.jpg" alt="Map" id="map" />
-        <!-- תל אביב -->
-        <div
-          class="branch"
-          id="branch1"
-          style="top: 35%; left: 55%"
-          onclick="highlightBranch('branch1')"
-        ></div>
-        <!-- חיפה -->
-        <div
-          class="branch"
-          id="branch2"
-          style="top: 15%; left: 58%"
-          onclick="highlightBranch('branch2')"
-        ></div>
-        <!-- ירושלים -->
-        <div
-          class="branch"
-          id="branch3"
-          style="top: 40%; left: 55%"
-          onclick="highlightBranch('branch3')"
-        ></div>
-        <!-- באשר שבע  -->
-        <div
-          class="branch active"
-          id="branch4"
-          style="top: 55%; left: 55%"
-          onclick="highlightBranch('branch4')"
-        ></div>
-        <!-- אשדוד -->
-        <div
-          class="branch"
-          id="branch5"
-          style="top: 40%; left: 48%"
-          onclick="highlightBranch('branch5')"
-        ></div>
-      </div>
+
+    <div id="map" style="height: 700px; width: 50%;"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgi9NeNRk1lCXlsqv2FSmI_pYof5zB-3o&callback=initMap" async defer></script>
+    <script>
+      let markers = [];
+  
+      function initMap() {
+        const locations = [
+          { lat: 32.08414, lng: 34.79995, title: "Tel Aviv" },
+          { lat: 32.79404, lng: 34.98957, title: "Haifa" },
+          { lat: 31.76832, lng: 35.21371, title: "Jerusalem" },
+          { lat: 31.25297, lng: 34.79146, title: "Be'er Sheva" },
+          { lat: 31.80145, lng: 34.64350, title: "Ashdod" }
+        ];
+  
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 8,
+          center: locations[2]
+        });
+  
+        locations.forEach((location, index) => {
+          const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: location.title
+          });
+          markers.push(marker);
+  
+          // Add click listener to highlight marker
+          document.getElementById(`listBranch${index + 1}`).addEventListener("click", () => {
+            highlightMarker(index);
+          });
+        });
+      }
+  
+      function highlightMarker(index) {
+        // Reset all markers to default icon
+        markers.forEach(marker => {
+          marker.setIcon(null);
+        });
+  
+        // Set the icon of the highlighted marker
+        markers[index].setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+  
+        // Center the map on the highlighted marker
+        map.setCenter(markers[index].getPosition());
+      }
+    </script>
       <div id="branchList">
         <ul>
           <li id="listBranch1" onclick="highlightBranch('branch1')">
@@ -193,5 +204,7 @@
         </ul>
       </div>
     </div>
+
+  </body>
   </body>
 </html>

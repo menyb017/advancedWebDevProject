@@ -117,3 +117,11 @@ document.getElementById('deleteProductFromdb').addEventListener('submit', async 
         alert('Failed to delete product: ' + error.message);
     }
 }   );  
+
+document.addEventListener('DOMContentLoaded', function () {
+if (localStorage.getItem("currentUser") == 'super Admin') {
+    alert('welcome super Admin');
+}else{
+    window.location.href = "../../client/html/index.html";
+}
+});
