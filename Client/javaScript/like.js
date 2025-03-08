@@ -53,7 +53,7 @@ const displayProducts = (productsToDisplay = favoris) => {
     AddToFavBtn.style.color = "red";
     AddToFavBtn.className = "favBtn";
     AddToFavBtn.id = product.productName + "Btn";
-    productImg.src = product.itemImage;
+    productImg.src = product.productImage;
     productImg.className = "product-img";
 
     const textContainerUp = document.createElement("div");
@@ -65,13 +65,12 @@ const displayProducts = (productsToDisplay = favoris) => {
     textContainer.innerHTML = `
           <div>Category: ${product.productCategory}</div>
           <div>Price: ${product.productPrice}$</div>
-          <div>Quantity: ${product.itemQuantity} left</div>
       `;
-    if (product.quantity < 10) {
+    if (product.productQuantity < 10) {
       textContainer.innerHTML = `
         <div>Category: ${product.productCategory}</div>
         <div>Price: ${product.productPrice}$</div>
-        <div> Quantity: The last ones! </div>
+        <div>You have to hurry up this is the last ones left! </div>
       `;
     }
     textContainerUp.appendChild(AddToFavBtn);
