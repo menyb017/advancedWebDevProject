@@ -31,10 +31,10 @@ router.post("/addProduct", async (req, res) => {
     productCategory: itemCategory,
     productId: itemId,
     productName: itemName,
-    itemDescription: itemDescription,
+    productDescription: itemDescription,
     productPrice: itemPrice,
-    itemQuantity: itemQuantity,
-    itemImage: itemImage,
+    productQuantity: itemQuantity,
+    productImage: itemImage,
   };
   try {
     if ((await productService.checkIfinDb(product)) === 1) {
@@ -58,5 +58,45 @@ router.delete("/:productId", async (req, res) => {
     res.status(500).send("Error deleting product");
   }
 });
-
+router.get("/:productId", async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await productService.getProduct(productId);
+    if (product) {
+      return res.status(200).json(product);
+    } else {
+      return res.status(404).send("Product not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching product");
+  }
+});
+router.patch("/update/:productId", async (req, res) => {
+  const { productId } = req.params;
+  const {
+    productCategory,
+    productName,
+    productDescription,
+    productPrice,
+    productQuantity,
+    productImage,
+  } = req.body;
+  const product = {
+    productCategory,
+    productId,
+    productName,
+    productDescription,
+    productPrice,
+    productQuantity,
+    productImage,
+  };
+  try {
+    await productService.updateProduct(productId, product);
+    res.status(200).send("Product updated successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating product");
+  }
+});
 module.exports = router;

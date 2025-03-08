@@ -121,9 +121,6 @@
           </form>
       </div>
   </div>
-    <div id="spyMode">
-      <h1>Acces Forbiden</h1>
-    </div>
  <h1>Add Items to Database</h1><br>
     <form id="addproductTodb" method="post" >  
         <label for="itemCategory">Item Category:</label>
@@ -169,12 +166,39 @@
   <br>
   <!-- delete item from data base -->
 
-  <h1>Delete Item from data Base</h1><br>
-  <form method="post" id="deleteProductFromdb" >
-    <label>Select product to delete:</label>
+  <h1>Change or Delete Item from data Base</h1><br>
+  <form method="put" id="deleteProductFromdb" >
+    <label>Select product to change or delete:</label>
       <div id="productsContainer">
       </div>
-      <button type="submit" id="modifyDB">Delete Items from Db</button>
+      <label for="itemCategoryUpdate" id="itemCategoryLabel">Item Category:</label>
+      <select id="itemCategoryUpdate" name="itemCategory" required>
+        <option 1="Suits">Suits</option>
+        <option 2="Shirts">Shirts</option>
+        <option 3="Pants">Pants</option>
+        <option 4="Shoes">Shoes</option>
+        <option 5="Accessories">Accessories</option>
+      </select>
+      <label for="itemIdUpdate" id="itemIdLabel">Item Id:</label>
+      <input type="text" id="itemIdUpdate" name="itemIdUpdate" required >
+      <label for="itemNameUpdate" id="itemNameLabel">Item Name:</label>
+      <input type="text" id="itemNameUpdate" name="itemNameUpdate" required>
+      <label for="itemDescriptionUpdate" id="itemDescriptionLabel">Item Description:</label>
+      <textarea id="itemDescriptionUpdate" name="itemDescriptionUpdate" required>
+      </textarea>
+      <label for="itemPriceUpdate" id="itemPriceLabel">Item Price:</label>
+      <input type="number" id="itemPriceUpdate" name="itemPriceUpdate" required>
+      <label for="itemQuantityUpdate" id="itemQuantityLabel">Item Quantity:</label>
+      <input type="number" id="itemQuantityUpdate" name="itemQuantityUpdate" required>
+      <label for="itemImageUpdate" id="itemImageLabel">Item Image URL:</label>
+      <input type="text" id="itemImageUpdate" name="itemImageUpdate" required>
+
+
+      <div id="submitButtonsChangeDb">
+        <button type="submit" id="updateItem">Update Item</button>
+        <button type="submit" id="deleteFromDb">Delete Item</button>
+      </div>
+
     </form> 
 </body>
 </html>

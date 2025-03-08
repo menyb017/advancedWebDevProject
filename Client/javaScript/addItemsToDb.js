@@ -19,57 +19,6 @@ document.getElementById('addproductTodb').addEventListener('submit', async funct
     alert(data);
 
 });
-
-//todo add a function to delet a product to the database
-//todo add a function to update a product to the database
-
-async function displayUsers() {
-    const response = await fetch('http://localhost:8080/users');
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    const users = await response.json();
-    const userContainer = document.getElementById('usersContainer');
-    const usersList = document.createElement('select');
-    usersList.id = 'usersList';
-
-    users.forEach(user => {
-        const option = document.createElement('option');
-        option.value = user.username;
-        option.textContent = user.username;
-        usersList.appendChild(option);
-    });
-
-    userContainer.innerHTML = '';
-    userContainer.appendChild(usersList);
-}
-
-// Appelez la fonction displayUsers pour remplir le select au chargement de la page
-document.addEventListener('DOMContentLoaded', displayUsers);
-
-async function displayProducts() {
-    const response = await fetch('http://localhost:8080/products');
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    const products = await response.json();
-    const productsContainer = document.getElementById('productsContainer');
-    const productsList = document.createElement('select');
-    productsList.id = 'productsList';
-
-    products.forEach(product => {
-        const option = document.createElement('option');
-        option.value =(product.productId);
-        option.textContent = ("name: "+product.productName) +" / id: "+product.productId;
-        productsList.appendChild(option);
-    });
-    productsContainer.innerHTML = '';
-    productsContainer.appendChild(productsList);
-}
-
-// Appelez la fonction displayProducts pour remplir le select au chargement de la page
-document.addEventListener('DOMContentLoaded', displayProducts);
-
 //send the value of the selected user to the server to delete it
 document.getElementById('modifyTheUserDb').addEventListener('submit', async function(event) {
     const username = document.getElementById('usersList').value;
@@ -94,8 +43,74 @@ document.getElementById('modifyTheUserDb').addEventListener('submit', async func
     }
 });
 
+async function displayUsers() {
+    const response = await fetch('http://localhost:8080/users');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const users = await response.json();
+    const userContainer = document.getElementById('usersContainer');
+    const usersList = document.createElement('select');
+    usersList.id = 'usersList';
+
+    users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.username;
+        option.textContent = user.username;
+        usersList.appendChild(option);
+    });
+
+    userContainer.innerHTML = '';
+    userContainer.appendChild(usersList);
+}
+// Appelez la fonction displayUsers pour remplir le select au chargement de la page
+document.addEventListener('DOMContentLoaded', displayUsers);
+// Appelez la fonction DisplayProdsInSelect pour remplir le select au chargement de la page
+document.addEventListener('DOMContentLoaded', DisplayProdsInSelect);
+
+//function to display items from th db to the select option
+async function DisplayProdsInSelect() {
+    const response = await fetch('http://localhost:8080/products');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const products = await response.json();
+    productsArray=products;
+    const productsContainer = document.getElementById('productsContainer');
+    const productsList = document.createElement('select');
+    productsList.id = 'productsList';
+
+
+    products.forEach(product => {
+        const option = document.createElement('option');
+        option.value =(product.productId);
+        option.textContent = ("name: "+product.productName) +" / id: "+product.productId;
+        productsList.appendChild(option);
+    });
+    productsContainer.innerHTML = '';
+    productsContainer.appendChild(productsList);
+    productsList.addEventListener('change', DisplayProdsInLabel);
+}
+//-------------------------function to display the selected item in the label-------------------------
+async function DisplayProdsInLabel(){
+    const productId = document.getElementById('productsList').value;
+    const product = productsArray.find(product => product.productId == productId);
+ if (product) {
+    document.getElementById('itemCategoryUpdate').value = product.productCategory;
+    document.getElementById('itemIdUpdate').value = product.productId;
+    document.getElementById('itemNameUpdate').value =product.productName;
+    document.getElementById('itemDescriptionUpdate').value =product.productDescription;
+    document.getElementById('itemPriceUpdate').value =product.productPrice;
+    document.getElementById('itemQuantityUpdate').value =product.productQuantity;
+    document.getElementById('itemImageUpdate').value =product.productImage;
+
+} else {
+    console.error('Product not found');
+}
+}
+
 //send the value of the selected product to the server to delete it
-document.getElementById('deleteProductFromdb').addEventListener('submit', async function(event) {
+document.getElementById('deleteFromDb').addEventListener('click', async function(event) {
     const productId = document.getElementById('productsList').value;
     event.preventDefault();
     try {
@@ -111,12 +126,51 @@ document.getElementById('deleteProductFromdb').addEventListener('submit', async 
         }
 
         alert('Product deleted successfully');
-        displayProducts(); // Rafraîchir la liste des utilisateurs
+        DisplayProdsInSelect(); // Rafraîchir la liste des utilisateurs
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
         alert('Failed to delete product: ' + error.message);
     }
 }   );  
+
+//send the value of the selected product to the server to update it
+document.getElementById('updateItem').addEventListener('click', async function(event) {
+    const itemCategory = document.getElementById('itemCategoryUpdate').value;
+    const itemId = document.getElementById('itemIdUpdate').value;
+    const itemName = document.getElementById('itemNameUpdate').value;
+    const itemDescription = document.getElementById('itemDescriptionUpdate').value;
+    const itemPrice = document.getElementById('itemPriceUpdate').value;
+    const itemQuantity = document.getElementById('itemQuantityUpdate').value;
+    const itemImage = document.getElementById('itemImageUpdate').value;
+    const productId = document.getElementById('productsList').value;
+    event.preventDefault();
+    try {
+        const response = await fetch(`http://localhost:8080/products/update/${productId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                productCategory:itemCategory,
+                productId:itemId,
+                productName: itemName,
+                productDescription: itemDescription,
+                productPrice: itemPrice,
+                productQuantity: itemQuantity,
+                productImage: itemImage }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        alert('Product updated successfully');
+        DisplayProdsInSelect(); // Rafraîchir la liste des utilisateurs
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        alert('Failed to update product: ' + error.message);
+    }
+}   );
 
 document.addEventListener('DOMContentLoaded', function () {
 if (localStorage.getItem("currentUser") == 'super Admin') {

@@ -50,7 +50,7 @@ function displayProducts(array) {
         AddToFavBtn.className = "favBtn";
         AddToFavBtn.id = product.productName + "Btn";
 
-        productImg.src = product.itemImage;
+        productImg.src = product.productImage;
         productImg.className = "product-img";
 
         //---------------------------------------------------------------------if pressed the btn this even call the function
@@ -65,20 +65,20 @@ function displayProducts(array) {
         textContainerUp.className = "textContaineurUp";
         const textContainer = document.createElement("div");
         textContainer.className = "text-container";
-        if (product.itemQuantity < 10) {
+        if (product.productQuantity < 10) {
           textContainer.innerHTML = `
           <div>Name: ${product.productName}</div>
           <div>Category: ${product.productCategory}</div>
           <div>Price: ${product.productPrice}$</div>
           <div>You have to hurry up this is the last ones! </div>
-          <div>Description: ${product.itemDescription}</div>
+          <div>Description: ${product.productDescription}</div>
           `;
-        }else if (product.itemQuantity >=10) {
+        }else if (product.productQuantity >=10) {
           textContainer.innerHTML = `
           <div>Name: ${product.productName}</div>
           <div>Category: ${product.productCategory}</div>
           <div>Price: ${product.productPrice}$</div>
-          <div>Description: ${product.itemDescription}</div>
+          <div>Description: ${product.productDescription}</div>
           `;
         }
         textContainerUp.appendChild(AddToFavBtn);

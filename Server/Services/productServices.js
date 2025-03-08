@@ -6,6 +6,11 @@ async function getAllProducts() {
   if (products.length > 0) return products;
   else return null;
 }
+async function getProductById(productId) {
+  const database = dbConnection.getDB();
+  const product = await database.collection("Products").findOne({ productId });
+  return product;
+}
 
 async function addProduct(product) {
   const database = dbConnection.getDB();
@@ -13,10 +18,11 @@ async function addProduct(product) {
     productCategory: product.productCategory,
     productId: product.productId,
     productName: product.productName,
-    itemDescription: product.itemDescription,
+    productDescription: product.productDescription,
     productPrice: product.productPrice,
-    itemQuantity: product.itemQuantity,
-    itemImage: product.itemImage,
+    productQuantity: product.productQuantity,
+    productImage: product.productImage,
+
   });
 }
 
@@ -32,4 +38,20 @@ async function deleteProduct(productId) {
   const database = dbConnection.getDB();
   await database.collection("Products").deleteOne({productId});
 }
-module.exports = { checkIfinDb, addProduct, getAllProducts, deleteProduct };
+async function updateProduct(productId, product) {
+  const database = dbConnection.getDB();
+  await database.collection("Products").updateOne(
+    { productId: productId },
+    {
+      $set: {
+        productCategory: product.productCategory,
+        productName: product.productName,
+        productDescription: product.productDescription,
+        productPrice: product.productPrice,
+        productQuantity: product.productQuantity,
+        productImage: product.productImage,
+      },
+    }
+  );
+}
+module.exports = { checkIfinDb, addProduct, getAllProducts, deleteProduct, updateProduct,getProductById };
