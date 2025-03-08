@@ -48,8 +48,7 @@ form textarea {
     height: 100px;
 }
 
-form button {
-    width: 100%;
+#updateItem{
     padding: 10px;
     background-color: #333;
     border: none;
@@ -58,9 +57,25 @@ form button {
     font-size: 16px;
     cursor: pointer;
 }
+#deleteFromDb,#addItemSubmit,#modifyDB{
+  padding: 10px;
+  background-color: #333;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-form button:hover {
-    background-color: #5cb85c;
+#deleteFromDb:hover,#modifyDB:hover {
+    background-color: #b74834;
+}
+#updateItem:hover,#addItemSubmit:hover{
+  background-color: #5cb85c;
+}
+#submitButtonsChangeDb {
+  display: flex;
+  justify-content: space-evenly;
 }
 /* -------------------------------------- */
 .navBar {
