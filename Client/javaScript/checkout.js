@@ -166,7 +166,7 @@ const displayProducts = (productsToDisplay = cart) => {
     AddToFavBtn.textContent = "♥️";
     AddToFavBtn.className = "favBtn";
     AddToFavBtn.id = product.productName + "Btn"; 
-    productImg.src = product.itemImage;
+    productImg.src = product.productImage;
     productImg.className = "product-img";
 
     const textContainer = document.createElement("div");
