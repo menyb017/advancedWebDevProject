@@ -1,11 +1,71 @@
 const bcrypt = require("bcrypt");
 const dbConnection = require("../dbConnection.js");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "this_is_the_secret_key";
+
+//----------------------------------------
+async function attributeToken(username) {
+  const dbUsers = dbConnection.getDB();
+  const user = await dbUsers.collection('users').findOne({ username });
+  const superAdmin = await dbUsers.collection('superAdmin').findOne({ username });
+  if (superAdmin) {
+    const token = jwt.sign({ id: superAdmin._id, username: superAdmin.username ,role:superAdmin.role}, SECRET_KEY, { expiresIn: '1m' });
+    await dbUsers.collection('superAdmin').updateOne({ username }, { $set: { token } });
+    return token;
+  }
+  if (user) {
+    const token = jwt.sign({ id: user._id, username: user.username,role:user.role }, SECRET_KEY, { expiresIn: '1m' });
+    await dbUsers.collection('users').updateOne({ username }, { $set: { token } });
+    return token;
+  }
+  throw new Error('User not found');
+}
+//----------------------------------------
+async function checkToken(token) {
+  try {
+    const decodedToken = jwt.decode(token);
+    const db = dbConnection.getDB();
+    const userRole = decodedToken.role;
+    // console.log("decodedToken:"+ decodedToken);
+    // console.log("decodedToken.id:"+ decodedToken.id);
+    // console.log("user:"+ user);
+    // console.log("superAdmin:"+superAdmin);
+    if (userRole == 'user') {
+      return 'user';
+      console.log("enter in user");
+    } 
+    // console.log(superAdmin);
+    if (userRole == 'superAdmin') {
+      return 'superAdmin';
+      console.log("enter in superAdmin");
+    } 
+    else {
+      return "invalid";
+    }
+  } catch (error) {
+    console.error('Invalid token:', error);
+    return "invalid";
+  }
+}
+
+//----------------------------------------
+async function checkValidyToken(token) {
+    const decodedToken = jwt.decode(token);
+    const currentTime = (Date.now() / 1000); 
+
+    if(decodedToken.exp < currentTime){
+      return false;
+    }else{
+      return true;
+    } 
+}
+
+//----------------------------------------
+
 
 async function checkIfUserInDb(username) {
   const dbUsers = dbConnection.getDB();
-
   const foundUser = await dbUsers.collection("users").findOne({ username });
-
   return foundUser ? true : false;
 }
 
@@ -38,6 +98,7 @@ async function addUserToDB(username, password) {
   await dbUsers.collection("users").insertOne({
     username: username,
     password: hashedPassword,
+    role: "user",
   });
 }
 async function getAllUsers() {
@@ -59,4 +120,4 @@ async function deleteUser(username) {
     throw error;
   }
 }
-module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin, getAllUsers ,deleteUser};
+module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin, getAllUsers ,deleteUser,attributeToken,checkToken,checkValidyToken};

@@ -172,10 +172,47 @@ document.getElementById('updateItem').addEventListener('click', async function(e
     }
 }   );
 
-document.addEventListener('DOMContentLoaded', function () {
-if (localStorage.getItem("currentUser") == 'super Admin') {
-    alert('welcome super Admin');
-}else{
-    window.location.href = "../../client/html/index.html";
-}
+
+//--------------------------
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token');
+    console.log('Token found:', token); // Log pour vérifier que le token est trouvé
+    if (token) {
+        fetch('http://localhost:8080/users/verifyToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: token }),
+        })
+            .then(response => {
+                console.log('Response status:', response.status); // Log pour vérifier le statut de la réponse
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('success', data.message);
+                if (data.message === 'user') {
+                    console.log('Token verified!');
+                    window.location.href = '../html/index.html';
+                } else if (data.message === 'superAdmin') {
+                    console.log('Token verified!');
+                    // Permettre le chargement de la page
+                } else if (data.message === 'Invalid token') {
+                    console.log('Token verification failed!');
+                    alert('Invalid token: you cannot access this page');
+                    window.location.href = '../html/login.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Log pour vérifier l'erreur exacte
+                alert('An error occurred: you cannot access this page');
+                window.location.href = '../html/login.html';
+            });
+    } else {
+        console.log('No token found'); // Log pour vérifier que le token n'est pas trouvé
+        window.location.href = '../html/login.html';
+    }
 });
