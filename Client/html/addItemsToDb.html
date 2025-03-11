@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Items to Database</title>
     <link rel="stylesheet" href="../css/addItemsToDb.css">
-    <script src="../javaScript/addItemsToDb.js" defer></script>
+    <link rel="stylesheet" href="../css/displayOrders.css" />
+     <script src="../javaScript/addItemsToDb.js" defer></script>
+     <script src="../javaScript/displayOrders.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body onload="displayUsers()">
 
@@ -121,6 +124,11 @@
           </form>
       </div>
   </div>
+
+  <div>
+    <div id="orderContainer"></div>
+  </div>
+  <hr>
  <h1>Add Items to Database</h1><br>
     <form id="addproductTodb" method="post" >  
         <label for="itemCategory">Item Category:</label>
@@ -200,6 +208,7 @@
       </div>
 
     </form> 
+    
 </body>
 </html>
 

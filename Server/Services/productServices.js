@@ -22,7 +22,6 @@ async function addProduct(product) {
     productPrice: product.productPrice,
     productQuantity: product.productQuantity,
     productImage: product.productImage,
-
   });
 }
 
@@ -36,7 +35,7 @@ async function checkIfinDb(product) {
 }
 async function deleteProduct(productId) {
   const database = dbConnection.getDB();
-  await database.collection("Products").deleteOne({productId});
+  await database.collection("Products").deleteOne({ productId });
 }
 async function updateProduct(productId, product) {
   const database = dbConnection.getDB();
@@ -54,4 +53,11 @@ async function updateProduct(productId, product) {
     }
   );
 }
-module.exports = { checkIfinDb, addProduct, getAllProducts, deleteProduct, updateProduct,getProductById };
+module.exports = {
+  checkIfinDb,
+  addProduct,
+  getAllProducts,
+  deleteProduct,
+  updateProduct,
+  getProductById,
+};

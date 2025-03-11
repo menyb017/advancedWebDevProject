@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const dbConnection = require("./dbConnection.js");
-const productRouter = require("../Server/Routers/productRouter.js");
+const productRouter = require("./Routers/productRouter.js");
 const usersRouter = require("./Routers/usersRouter.js");
+const ordersRouter = require("./Routers/ordersRouter.js");
 const port = 8080;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(usersRouter);
 dbConnection
   .connectToDB()
   .then(() => {
@@ -16,6 +16,7 @@ dbConnection
 
     app.use("/products", productRouter);
     app.use("/users", usersRouter);
+    app.use("/orders", ordersRouter);
     app.listen(port, () => {
       console.log(`Server running on port: ${port}`);
     });

@@ -21,7 +21,9 @@ async function authenticateUser(username, password) {
 }
 async function authenticateSuperAdmin(username, password) {
   const dbUsers = dbConnection.getDB();
-  const foundUser = await dbUsers.collection("superAdmin").findOne({ username });
+  const foundUser = await dbUsers
+    .collection("superAdmin")
+    .findOne({ username });
 
   if (!foundUser) {
     return false;
@@ -59,4 +61,11 @@ async function deleteUser(username) {
     throw error;
   }
 }
-module.exports = { checkIfUserInDb, addUserToDB, authenticateUser,authenticateSuperAdmin, getAllUsers ,deleteUser};
+module.exports = {
+  checkIfUserInDb,
+  addUserToDB,
+  authenticateUser,
+  authenticateSuperAdmin,
+  getAllUsers,
+  deleteUser,
+};

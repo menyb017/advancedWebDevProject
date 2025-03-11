@@ -45,7 +45,7 @@
                 style="width: 20px; height: 20px; vertical-align: middle"
               />
             </a>
-            <a id="cmdNav" href="../html/Checkout.html"class="navbarBtn">Shopping Bag</a>
+            <a id="cmdNav" href="../html/Checkout.html"class="navbarBtn">Shopping Cart</a>
             <label id="NumItemsInCart"></label>
           </div>
         </div>
@@ -129,7 +129,7 @@
 </div>
  
   <div id="textShowifItemsInCArt">
-      <h1 id="textblock">Shopping Bag</h1>
+      <h1 id="textblock">Shopping Cart</h1>
       <div id="productDisplay"></div>
       <div id="checkSumDisplay">
         <div id="price">
@@ -144,9 +144,48 @@
             <p>Total To Pay</p>
             <p id="totalFinalCommande"></p>
         </div>
+
+       <hr>
+
+      <h3 id="titleMailAddress">Mail Address</h3>
+        <form id="mailAddressForm">
+            <div id="mailAddress">
+              <div id="mailDiv">
+                <label id="mail" for="mailInput">Mail</label>
+               <input type="email" id="email" name="email" 
+         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="address@domain"
+          title="Enter a valid email address (e.g., example@domain.com)" required>
+              </div>
+        </form>
+
+     
+<h3 id="titleShippingAddress">Shipping Address</h3>
+  <form id="shippingAddressForm">
+            <div id="shippingAddress">
+              <div id="addressDiv">
+                <label id="address" for="addressInput">Address</label>
+                <input id="addressInput"placeholder="1234 Main St" required>
+              </div>
+              <div id="cityDiv">
+                <label id="city" for="cityInput">City</label>
+                <input id="cityInput" placeholder="New York" required>
+              </div>
+              <div id="stateDiv">
+                <label id="state" for="stateInput">State</label>
+                <input id="stateInput" placeholder="NY" required>
+              </div>
+              <div id="zipDiv">
+                <label id="zip" for="zipInput">Zip</label>
+                <input id="zipInput" placeholder="10001" required>
+              </div>
+            </div>
+        </form>
+
+       <br> <hr>
+
         <h3 id="titlePaymentMethode">Payment Method</h3>
 
-        <form method="post" id="paymentForm">
+        <form id="paymentForm">
             <div id="PaymentMethod">
               <div id="nameDiv">
                 <label id="name" for="nameInput">Name</label>
@@ -166,7 +205,6 @@
               </div>
               <button type="submit" id="FinalPurshass">Final The Purshass</button>
             </div>
-
         </form>
 
       </div>

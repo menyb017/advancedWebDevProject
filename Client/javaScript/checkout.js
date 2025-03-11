@@ -1,3 +1,6 @@
+let orderItemsPrice = 0;
+let orderTotalPrice = 0;
+
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
   sidebar.classList.toggle("open");
@@ -86,122 +89,122 @@ const displayProducts = (productsToDisplay = cart) => {
     const container = document.createElement("div");
     container.className = "product-container";
 
+    // Product Image
     const productImg = document.createElement("img");
-    const deleteToCardBtn = document.createElement("button");
+    productImg.src = product.productImage;
+    productImg.className = "product-img";
+
+    // Buttons
+    const deleteToCartBtn = document.createElement("button");
+    deleteToCartBtn.textContent = "🗑️";
+
     const AddToFavBtn = document.createElement("button");
+    AddToFavBtn.textContent = "♥️";
+    AddToFavBtn.className = "favBtn";
+    AddToFavBtn.id = product.productName + "Btn";
+
+    // Size Selection
     const selectSize = document.createElement("select");
-    // __________option choosedefault
-    const optionOfSelectSizeChoose = document.createElement("option");
-    optionOfSelectSizeChoose.value = "Size";
-    optionOfSelectSizeChoose.textContent = "Size";
-    // __________option S
-    const optionOfSelectSizeS = document.createElement("option");
-    optionOfSelectSizeS.value = "S";
-    optionOfSelectSizeS.textContent = "S";
-    // __________option M
-    const optionOfSelectSizeM = document.createElement("option");
-    optionOfSelectSizeM.value = "M";
-    optionOfSelectSizeM.textContent = "M";
-    // __________option L
-    const optionOfSelectSizeL = document.createElement("option");
-    optionOfSelectSizeL.value = "L";
-    optionOfSelectSizeL.textContent = "L";
-    // __________option XL
-    const optionOfSelectSizeXl = document.createElement("option");
-    optionOfSelectSizeXl.value = "XL";
-    optionOfSelectSizeXl.textContent = "XL";
+    selectSize.id = product.productId + "selectSize";
 
+    const sizes = ["Size", "S", "M", "L", "XL"];
+    sizes.forEach((size) => {
+      const option = document.createElement("option");
+      option.value = size;
+      option.textContent = size;
+      selectSize.appendChild(option);
+    });
+
+    // Quantity Selection
     const selectNumItems = document.createElement("select");
-    // __________option 1
+    selectNumItems.id = product.productId + "selectNumItems";
 
-    const optionOfSelectNumItems1 = document.createElement("option");
-    optionOfSelectNumItems1.value = "1";
-    optionOfSelectNumItems1.textContent = "1";
-    // __________option 2
-    const optionOfSelectNumItems2 = document.createElement("option");
-    optionOfSelectNumItems2.value = "2";
-    optionOfSelectNumItems2.textContent = "2";
-    // __________option 3
-    const optionOfSelectNumItems3 = document.createElement("option");
-    optionOfSelectNumItems3.value = "3";
-    optionOfSelectNumItems3.textContent = "3";
-    // __________option 4
-    const optionOfSelectNumItems4 = document.createElement("option");
-    optionOfSelectNumItems4.value = "4";
-    optionOfSelectNumItems4.textContent = "4";
+    for (let i = 1; i <= 4; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = i;
+      selectNumItems.appendChild(option);
+    }
 
-    // //***********************************************************************************************************/
-    // // updating chosen quantity into current item and updating the cart
+    if (!product.selectedQuantity) {
+      product.selectedQuantity = 1;
+    }
+    if (!product.selectedSize) {
+      product.selectedSize = "Size";
+    }
 
-    // selectNumItems.addEventListener("change", () => {
-    //   const selectedQuantity = Number(selectNumItems.value);
+    // Ensure the correct values are selected in the dropdowns
+    selectSize.value = product.selectedSize;
+    selectNumItems.value = product.selectedQuantity;
 
-    //   const cartItemIndex = cart.findIndex(
-    //     (item) => item.name === product.productName
-    //   );
 
-    //   if (cartItemIndex != -1) {
-    //     cart[cartItemIndex].itemQuantity = selectedQuantity;
+    // Event listener to update cart when selecting size
+    selectSize.addEventListener("change", () => {
+      const selectedSize = selectSize.value;
+      const cartItemIndex = cart.findIndex(
+        (item) => item.productName === product.productName
+      );
 
-    //     localStorage.setItem("cart", JSON.stringify(cart));
-    //   }
+      if (cartItemIndex !== -1) {
+        cart[cartItemIndex].selectedSize = selectedSize;
 
-    //   //ָָָָָָָָָָָָָָָָָ********************************************************************************************************
+        // Ensure consistency in
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+    });
 
-    //   displayTotalCartItems();
-    // });
+    selectNumItems.addEventListener("change", () => {
+      const selectedQuantity = Number(selectNumItems.value);
+      const cartItemIndex = cart.findIndex(
+        (item) => item.productName === product.productName
+      );
 
-    // -----------------------------------------------------------------
+      if (cartItemIndex !== -1) {
+        cart[cartItemIndex].selectedQuantity = selectedQuantity;
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+    });
+
+    // Modify the addToCart function to include size and quantity
+    deleteToCartBtn.addEventListener("click", function () {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const filteredCart = cart.filter(
+        (item) => item.productName !== product.productName
+      );
+
+      localStorage.setItem("cart", JSON.stringify(filteredCart));
+
+      displayProducts(filteredCart);
+
+      getNumItemsInCart();
+    });
+
+    // Add to favorites
     AddToFavBtn.addEventListener("click", function () {
       addOrDeleteTofavoritesItems(product);
       getNumofFav();
     });
-    deleteToCardBtn.addEventListener("click", function () {
-      addToCart(product);
-      getNumItemsInCart();
-    });
-    selectNumItems.id = product.productId + "selectNumItems";
-    selectSize.id = product.productId + "selectSize";
-    deleteToCardBtn.textContent = "🗑️";
-    AddToFavBtn.textContent = "♥️";
-    AddToFavBtn.className = "favBtn";
-    AddToFavBtn.id = product.productName + "Btn"; 
-    productImg.src = product.productImage;
-    productImg.className = "product-img";
 
+    // Text Container
     const textContainer = document.createElement("div");
     textContainer.className = "text-container";
-
     textContainer.innerHTML = `
-          <div>Name: ${product.productName}</div>
-          <div>Price: ${product.productPrice}$</div>
-      `;
-    if (product.quantity < 10) {
-      //?????
-      textContainer.innerHTML = `
-        <div>Name: ${product.productName}</div>
-        <div>Price: ${product.productPrice}$</div>
-        <div>Quantity: The last ones! </div>
-      `;
-    }
+    <div>Name: ${product.productName}</div>
+    <div>Price: ${product.productPrice}$</div>
+    <div>${product.quantity < 10 ? "Quantity: The last ones!" : ""}</div>
+  `;
+
+    // Append elements
     textContainer.appendChild(AddToFavBtn);
     textContainer.appendChild(selectNumItems);
-
-    selectNumItems.appendChild(optionOfSelectNumItems1);
-    selectNumItems.appendChild(optionOfSelectNumItems2);
-    selectNumItems.appendChild(optionOfSelectNumItems3);
-    selectNumItems.appendChild(optionOfSelectNumItems4);
+    textContainer.appendChild(selectSize);
+    textContainer.appendChild(deleteToCartBtn);
 
     container.appendChild(productImg);
     container.appendChild(textContainer);
     displayProd.appendChild(container);
-    selectSize.appendChild(optionOfSelectSizeChoose); //default Option
-    selectSize.appendChild(optionOfSelectSizeS); //add the option S to xl in the select
-    selectSize.appendChild(optionOfSelectSizeM);
-    selectSize.appendChild(optionOfSelectSizeL);
-    selectSize.appendChild(optionOfSelectSizeXl);
-    textContainer.appendChild(selectSize); //ajout de selectsize au container
-    textContainer.appendChild(deleteToCardBtn);
   });
 };
 //------------------------------------
@@ -216,7 +219,7 @@ function addToCart(product) {
   if (!productExist) {
     cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(product.name + " added to your cart !");
+    alert(product.productName + " added to your cart !");
   } else {
     if (confirm("Do you want to delete this item from your cart ?")) {
       // למה לא משתמש בערך הבוליאני שחוזר???
@@ -285,9 +288,11 @@ document.addEventListener("change", function () {
 //-----------------------------------
 function sumPriceItems() {
   let items = JSON.parse(localStorage.getItem("cart")) || [];
-  var  sum = 0;
+  var sum = 0;
   items.forEach((item) => {
-    let quantity = Number(document.getElementById(item.productId + "selectNumItems").value); //quantity of this items
+    let quantity = Number(
+      document.getElementById(item.productId + "selectNumItems").value
+    ); //quantity of this items
     if (quantity === 1) {
       sum += Number(item.productPrice);
     } else {
@@ -295,7 +300,12 @@ function sumPriceItems() {
     }
   });
   document.getElementById("sumOfItems").innerHTML = sum + "$";
-  document.getElementById("totalFinalCommande").innerHTML = Number(sum + 5 )+ "$";
+  document.getElementById("totalFinalCommande").innerHTML =
+    Number(sum + 5) + "$";
+
+  orderItemsPrice = sum;
+
+  orderTotalPrice = sum + 5;
 }
 
 //--------------------------------------
@@ -306,7 +316,7 @@ function FunctFinalPurshass() {
   let originalProducts = JSON.parse(localStorage.getItem("products")) || [];
 
   items.forEach((item) => {
-    const productIndex = originalProducts.findByIndex(
+    const productIndex = originalProducts.findIndex(
       (product) => product.productName === item.productName
     );
     if (productIndex !== -1) {
@@ -314,10 +324,6 @@ function FunctFinalPurshass() {
     }
   });
   localStorage.setItem("products", JSON.stringify(originalProducts));
-
-  // originalProducts.forEach((product) =>
-  //   console.log(product.name, product.quantity)
-  // );
 
   //**********************************************************************************************************************/
   let message =
@@ -332,39 +338,79 @@ function FunctFinalPurshass() {
     }$\n`;
     sum += item.productPrice * quantity;
   });
+
+  //const deliveryFee = Math.floor(Math.random() * 50 - 5 + 1) + 5;
   message += `Delivery Cost: 5$\n`;
   message += `Total: ${sum + 5}$\nWe hope to see you again soon!`;
   alert(message);
 }
 
+function AddOrderToDb() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const user = localStorage.getItem("currentUser");
 
-function FuncAddOrderToDb() {
-  let length=document .localStorage("cart").length;
-  let arrayItems=localStorage.getItem("cart");
-  for(let i=0;i<length;i++){
-      arrayItems[i].quantity+=document.getElementById(arrayItems[i].id + "selectNumItems").value;
-      arrayItems[i].size+=document.getElementById(arrayItems[i].id + "selectSize").value;
+  if (!user || cart.length === 0) {
+    alert("Please log in and add items to the cart before placing an order.");
+    return;
   }
 
-  let items = JSON.parse(localStorage.getItem("cart")) || [];
-  const name = document.getElementById("nameInput").value;
-  const cardNumber = document.getElementById("cardNumberInput").value;
-  const cardExpiration = document.getElementById("expirationInput").value;
-  const cardCVV = document.getElementById("cvvInput").value;
-  fetch("http://localhost:8080/products/order", {
-    method:"POST",
-    headers: {"Content-Type": "application/json" },
-    body: JSON.stringify({arrayItems:arrayItems, Name:name, CardNumber:cardNumber, CardExpiration:cardExpiration, CardCVV:cardCVV}),
-  });
+  const shippingCity = document.getElementById("cityInput").value;
+  const shippingState = document.getElementById("stateInput").value;
+  const shippingAddress = document.getElementById("addressInput").value;
+  const shippingZipCode = document.getElementById("zipInput").value;
+  const email = document.getElementById("email").value;
+
+  const newOrder = {
+    user: user,
+    orderItems: cart,
+    shippingState: shippingState,
+    shippingCity: shippingCity,
+    shippingAddress: shippingAddress,
+    shippingZipCode: shippingZipCode,
+    email: email,
+    itemsPrice: orderItemsPrice,
+    totalPrice: orderTotalPrice,
+  };
+
+  console.log("order", newOrder);
+
+  fetch("http://localhost:8080/orders/addOrder", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newOrder),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Order added:", data.message);
+    })
+    .catch((err) => console.log("Error adding order:", err.message));
 }
+
 function clearCart() {
   //clear the localstorage to delete the elements from  this page after payment purshass
   localStorage.removeItem("cart");
 }
 //--------------------------
-document.getElementById("paymentForm").addEventListener("submit", function () {
-  //if the client click on final purshass call this 2 functionx
-  FunctFinalPurshass();
-  FuncAddOrderToDb();
-  clearCart();
-});
+document
+  .getElementById("paymentForm")
+  .addEventListener("submit", function (event) {
+    // Prevent form submission if an invalid size is found
+    if (cart.some((item) => item.selectedSize === "Size")) {
+      alert("Please select a size for all items in your cart.");
+      event.preventDefault(); // Stop form submission
+      return;
+    }
+
+    // Prevent form submission if an invalid quantity is found
+    else {
+      FunctFinalPurshass();
+      AddOrderToDb();
+      alert("Thank you for your purchase!");
+      clearCart();
+    }
+    // Proceed with final purchase
+  });
+
+// Prevent form submission if any validation fails
+
+// If everything is valid, proceed with the final purchase and actions

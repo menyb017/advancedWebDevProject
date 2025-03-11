@@ -9,86 +9,88 @@ document.addEventListener("DOMContentLoaded", function () {
       productsArray = data;
       const category = getCategoryFromURL();
       if (category) {
-      let filteredProductsByCategory= filterByCategory(category, productsArray);
+        let filteredProductsByCategory = filterByCategory(
+          category,
+          productsArray
+        );
         displayProducts(filteredProductsByCategory);
         getNumofFav();
         updateFavButtonColors(filteredProductsByCategory);
-        getNumItemsInCart();  
+        getNumItemsInCart();
       } else {
         displayProducts(productsArray);
         getNumofFav();
         updateFavButtonColors(productsArray);
-        getNumItemsInCart();  
-      } 
+        getNumItemsInCart();
+      }
     })
     .catch((error) => console.error("Error:", error));
-  });
+});
 // -----------------------------------------------------
 function displayProducts(array) {
+  const displayProd = document.getElementById("productDisplay");
+  displayProd.innerHTML = ""; // Clear the product display section
 
-        const displayProd = document.getElementById("productDisplay");
-        displayProd.innerHTML = ""; // Clear the product display section
+  array.forEach((product) => {
+    const container = document.createElement("div");
+    container.className = "product-container";
+    const productImg = document.createElement("img");
+    const AddToCardBtn = document.createElement("button");
+    const imgElement = document.createElement("img");
+    const AddToFavBtn = document.createElement("button");
+    AddToCardBtn.id = product.productName + "BtnPurshass";
+    AddToCardBtn.textContent = "Add to cart";
+    imgElement.src = "../../pictures/logo/bag_535280.png";
+    imgElement.alt = "Add to cart";
+    imgElement.style.width = "20px";
 
-        array.forEach((product) => {
-        const container = document.createElement("div");
-        container.className = "product-container";
-        const productImg = document.createElement("img");
-        const AddToCardBtn = document.createElement("button");
-        const imgElement = document.createElement("img");
-        const AddToFavBtn = document.createElement("button");
-        AddToCardBtn.id = product.productName + "BtnPurshass";
-        AddToCardBtn.textContent = "Add to cart";
-        imgElement.src = "../../pictures/logo/bag_535280.png";
-        imgElement.alt = "Add to cart";
-        imgElement.style.width = "20px";
+    // Create the heart icon dynamically
+    const heartIcon = document.createElement("i");
+    heartIcon.className = "fa-solid fa-heart";
+    AddToFavBtn.appendChild(heartIcon);
 
-        // Create the heart icon dynamically
-        const heartIcon = document.createElement("i");
-        heartIcon.className = "fa-solid fa-heart";
-        AddToFavBtn.appendChild(heartIcon);
+    AddToFavBtn.className = "favBtn";
+    AddToFavBtn.id = product.productName + "Btn";
 
-        AddToFavBtn.className = "favBtn";
-        AddToFavBtn.id = product.productName + "Btn";
+    productImg.src = product.productImage;
+    productImg.className = "product-img";
 
-        productImg.src = product.productImage;
-        productImg.className = "product-img";
+    //---------------------------------------------------------------------if pressed the btn this even call the function
+    AddToFavBtn.addEventListener("click", function () {
+      addTofavoritesItems(product);
+    });
+    AddToCardBtn.addEventListener("click", function () {
+      addToCart(product);
+    });
 
-        //---------------------------------------------------------------------if pressed the btn this even call the function
-        AddToFavBtn.addEventListener("click", function () {
-          addTofavoritesItems(product);
-        });
-        AddToCardBtn.addEventListener("click", function () {
-          addToCart(product);
-        });
-
-        const textContainerUp = document.createElement("div");
-        textContainerUp.className = "textContaineurUp";
-        const textContainer = document.createElement("div");
-        textContainer.className = "text-container";
-        if (product.productQuantity < 10) {
-          textContainer.innerHTML = `
+    const textContainerUp = document.createElement("div");
+    textContainerUp.className = "textContaineurUp";
+    const textContainer = document.createElement("div");
+    textContainer.className = "text-container";
+    if (product.productQuantity < 10) {
+      textContainer.innerHTML = `
           <div>Name: ${product.productName}</div>
           <div>Category: ${product.productCategory}</div>
           <div>Price: ${product.productPrice}$</div>
           <div>You have to hurry up this is the last ones! </div>
           <div>Description: ${product.productDescription}</div>
           `;
-        }else if (product.productQuantity >=10) {
-          textContainer.innerHTML = `
+    } else if (product.productQuantity >= 10) {
+      textContainer.innerHTML = `
           <div>Name: ${product.productName}</div>
           <div>Category: ${product.productCategory}</div>
           <div>Price: ${product.productPrice}$</div>
           <div>Description: ${product.productDescription}</div>
           `;
-        }
-        textContainerUp.appendChild(AddToFavBtn);
-        container.appendChild(textContainerUp);
-        AddToCardBtn.appendChild(imgElement);
-        textContainer.appendChild(AddToCardBtn);
-        container.appendChild(productImg);
-        container.appendChild(textContainer);
-        displayProd.appendChild(container);
-      });
+    }
+    textContainerUp.appendChild(AddToFavBtn);
+    container.appendChild(textContainerUp);
+    AddToCardBtn.appendChild(imgElement);
+    textContainer.appendChild(AddToCardBtn);
+    container.appendChild(productImg);
+    container.appendChild(textContainer);
+    displayProd.appendChild(container);
+  });
 }
 //--------------------------------------------------------
 function addTofavoritesItems(product) {
@@ -121,11 +123,12 @@ function addTofavoritesItems(product) {
 function updateFavButtonColors(array) {
   // check if the items is in the favorites and keep the color if yes // זה אותן דבר כמן ADD
   let favoris = JSON.parse(localStorage.getItem("favoris")) || [];
-  let size=array.length;
+  let size = array.length;
   favoris.forEach((product) => {
-    for(let i=0;i<size;i++){
-      if(array[i].productName===product.productName){
-        document.getElementById(product.productName + "Btn").style.color = "red";
+    for (let i = 0; i < size; i++) {
+      if (array[i].productName === product.productName) {
+        document.getElementById(product.productName + "Btn").style.color =
+          "red";
       }
     }
   });
@@ -135,7 +138,6 @@ function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
   sidebar.classList.toggle("open");
 }
-
 
 //--------------------------
 function displayCurrentUsername() {
@@ -154,46 +156,45 @@ function getCategoryFromURL() {
   return urlParams.get("category");
 }
 // -----------------------------------------------------
-function filterByCategory(category,arrayOfProducts) {
-  let filteredProducts = arrayOfProducts.filter(item => 
-    item.productCategory.toLowerCase() === category.toLowerCase() 
+function filterByCategory(category, arrayOfProducts) {
+  let filteredProducts = arrayOfProducts.filter(
+    (item) => item.productCategory.toLowerCase() === category.toLowerCase()
   );
   return filteredProducts;
-  };
+}
 // -----------------------------------------------------
 function sortProducts(array) {
-    let sortBy = document.getElementById("sort-by").value;
-    var sortArray = [...array];
-    switch(sortBy) {
-        case "random":
-          sortArray.sort(() => Math.random() - 0.5);
-            break;
-            
-        case "low-to-high":
-          sortArray.sort((a, b) => a.productPrice - b.productPrice);
-            break;
-            
-        case "high-to-low":
-          sortArray.sort((a, b) => b.productPrice - a.productPrice);
-            break;
-    }
-    
-    return sortArray;
+  let sortBy = document.getElementById("sort-by").value;
+  var sortArray = [...array];
+  switch (sortBy) {
+    case "random":
+      sortArray.sort(() => Math.random() - 0.5);
+      break;
+
+    case "low-to-high":
+      sortArray.sort((a, b) => a.productPrice - b.productPrice);
+      break;
+
+    case "high-to-low":
+      sortArray.sort((a, b) => b.productPrice - a.productPrice);
+      break;
+  }
+
+  return sortArray;
 }
 
 // מאזין
-document.getElementById("sort-by").addEventListener("change", ()=>{
-  let category=getCategoryFromURL();
-  if(category===null){
-      displayProducts(sortProducts(productsArray));
-      updateFavButtonColors(productsArray);
-  }else{
-     let filterProducts=filterByCategory(category,productsArray);
-    let sort=sortProducts(filterProducts);
-    displayProducts(sort); 
+document.getElementById("sort-by").addEventListener("change", () => {
+  let category = getCategoryFromURL();
+  if (category === null) {
+    displayProducts(sortProducts(productsArray));
+    updateFavButtonColors(productsArray);
+  } else {
+    let filterProducts = filterByCategory(category, productsArray);
+    let sort = sortProducts(filterProducts);
+    displayProducts(sort);
     updateFavButtonColors(sort);
   }
-
 });
 
 // כפתורים לפלטור
@@ -205,15 +206,16 @@ document.getElementById("filter-shirts-btn").addEventListener("click", () => {
   document.location.href = "store.html?category=Shirts";
 });
 document.getElementById("filter-pants-btn").addEventListener("click", () => {
-  document.location.href = "store.html?category=Pants"; 
+  document.location.href = "store.html?category=Pants";
 });
 document.getElementById("filter-suits-btn").addEventListener("click", () => {
   document.location.href = "store.html?category=Suits";
 });
-document.getElementById("filter-accessories-btn").addEventListener("click", () => {
-    document.location.href = "store.html?category=Accessories"; 
+document
+  .getElementById("filter-accessories-btn")
+  .addEventListener("click", () => {
+    document.location.href = "store.html?category=Accessories";
   });
-
 
 //-------------------------------------------
 function addToCart(product) {
@@ -226,6 +228,7 @@ function addToCart(product) {
 
   if (!productExists) {
     // Add product to cart
+
     cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
     alert(product.productName + " added to your shopping bag!");
