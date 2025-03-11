@@ -35,10 +35,12 @@ function validateUser() {
       if (data.message === "User authenticated") {
         console.log("Authentication successful!");
         localStorage.setItem("currentUser", username);
+        localStorage.setItem("token", data.token);
         window.location.href = "./index.html";
       }else if(data.message === "Super Admin authenticated"){
         console.log("Authentication successful!");
         localStorage.setItem("currentUser", username);
+        localStorage.setItem("token", data.token);
         window.location.href = "../../client/html/addItemsToDb.html";
       } 
       else {
@@ -125,3 +127,31 @@ function getNumItemsInCart() {
 }
 
 //--------------------------------------
+//send the token to the server to check it and return the dashboard for the super admin
+// const token =localStorage.getItem("token");
+// if(token){
+//   fetch("http://localhost:8080/users/verifyToken", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ token: token }),
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log("success", data.message);
+//       if (data.message === "user") {
+//         console.log("Token verified!");
+//         localStorage.setItem("token", token);
+//         window.location.href = "../html/index.html";
+//       }else if(data.message === "superAdmin"){
+//         console.log("Token verified!");
+//         window.location.href = "../../client/html/addItems.html";
+//         localStorage.setItem("token", token);
+//       } else {
+//         console.log("Token verification failed!");
+//         localStorage.removeItem("token");
+//         alert("Invalid token: you cant acces to this page");
+//         window.location.href = "../html/login.html";
+//       }
+//     })
+//     .catch((error) => console.error("Error", error));
+// }
