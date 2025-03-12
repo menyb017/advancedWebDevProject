@@ -55,12 +55,11 @@ router.delete("/users/:username", async (req, res) => {
   }
 });
 
-router.post("/users/authenticateUser", async (req, res) => {
+router.post("/authenticateUser", async (req, res) => {
   const { username, password } = req.body;
   try {
     const userValid = await usersService.authenticateUser(username, password);
     const superAdminValid = await usersService.authenticateSuperAdmin(username, password);
-
     if (superAdminValid) {
       const token = await usersService.attributeToken(username);
       return res.status(200).json({ message: "Super Admin authenticated", token });
@@ -77,7 +76,7 @@ router.post("/users/authenticateUser", async (req, res) => {
   }
 });
 
-router.post("/users/verifyToken", async (req, res) => {
+router.post("/verifyToken", async (req, res) => {
   const { token } = req.body;
   try {
     const role = await usersService.checkToken(token);

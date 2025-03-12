@@ -76,8 +76,9 @@ async function authenticateUser(username, password) {
   if (!foundUser) {
     return false;
   }
-
-  return await bcrypt.compare(password, foundUser.password);
+  else{
+    return await bcrypt.compare(password, foundUser.password);
+  }
 }
 async function authenticateSuperAdmin(username, password) {
   const dbUsers = dbConnection.getDB();
@@ -86,8 +87,10 @@ async function authenticateSuperAdmin(username, password) {
   if (!foundUser) {
     return false;
   }
+  else{
+    return await bcrypt.compare(password, foundUser.password);
+  }
 
-  return await bcrypt.compare(password, foundUser.password);
 }
 
 async function addUserToDB(username, password) {
