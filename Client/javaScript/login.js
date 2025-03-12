@@ -37,13 +37,12 @@ function validateUser() {
         localStorage.setItem("currentUser", username);
         localStorage.setItem("token", data.token);
         window.location.href = "./index.html";
-      }else if(data.message === "Super Admin authenticated"){
+      } else if (data.message === "Super Admin authenticated") {
         console.log("Authentication successful!");
         localStorage.setItem("currentUser", username);
         localStorage.setItem("token", data.token);
         window.location.href = "../../client/html/addItemsToDb.html";
-      } 
-      else {
+      } else {
         console.log("Authentication failed!");
         alert("invalid user!");
       }

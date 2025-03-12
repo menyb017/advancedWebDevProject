@@ -1,0 +1,83 @@
+.order-card {
+  display: flex; /* Align order details and items side by side */
+  justify-content: flex-start; /* Ensure space is on the left side */
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for the card */
+  background-color: #fff; /* White background */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+}
+
+.order-card:hover {
+  transform: translateY(-5px); /* Lift the card on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.order-header {
+  flex: 1; /* Order details take up remaining space */
+  margin-right: 20px; /* Adjusted space between the order details and items */
+  padding-right: 15px; /* Adjusted padding */
+  margin-left: 20px; /* Added margin to shift the order header to the right */
+}
+
+.order-items {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap if needed */
+  gap: 15px; /* Space between each item */
+}
+
+.orderCard {
+  width: 250px; /* Set a fixed width for each order item */
+  background-color: #f9f9f9; /* Light gray background */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for each item */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition on hover */
+}
+
+.orderCard:hover {
+  transform: translateY(-3px); /* Slight lift on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  margin-bottom: 15px; /* Space between image and text */
+  object-fit: contain; /* Ensure the image fits the container without being cropped */
+  object-position: center; /* Center the image within the box */
+}
+
+.order-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensure order data starts at the top */
+  padding-left: 10px; /* Adjusted padding to bring the text closer */
+}
+
+.order-item {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555; /* Slightly lighter text color */
+}
+
+.order-item strong {
+  font-weight: bold; /* Make labels bold */
+}
+
+.order-header h3,
+.order-header h4 {
+  margin: 5px 0;
+  color: #333; /* Darker text color for the headers */
+}
+
+.order-header h3 {
+  font-size: 18px; /* Slightly larger font size for the order ID */
+}
+
+.order-header h4 {
+  font-size: 16px;
+}
