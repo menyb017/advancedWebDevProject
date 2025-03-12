@@ -146,40 +146,38 @@
         </div>
 
        <hr>
-
-      <h3 id="titleMailAddress">Mail Address</h3>
-        <form id="mailAddressForm">
+<h3 id="titleMailAddress">Mail Address</h3>
+<div id="mailDiv">
             <div id="mailAddress">
               <div id="mailDiv">
                 <label id="mail" for="mailInput">Mail</label>
-               <input type="email" id="email" name="email" 
-         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="address@domain"
-          title="Enter a valid email address (e.g., example@domain.com)" required>
+                <input type="email" id="emailInput" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+                placeholder="address@gmail.com" title="Enter a valid email address (e.g., example@domain.com)" required>
               </div>
-        </form>
+            </div>
+</div>                          
+
 
      
 <h3 id="titleShippingAddress">Shipping Address</h3>
-  <form id="shippingAddressForm">
-            <div id="shippingAddress">
-              <div id="addressDiv">
-                <label id="address" for="addressInput">Address</label>
-                <input id="addressInput"placeholder="1234 Main St" required>
-              </div>
-              <div id="cityDiv">
-                <label id="city" for="cityInput">City</label>
-                <input id="cityInput" placeholder="New York" required>
-              </div>
-              <div id="stateDiv">
-                <label id="state" for="stateInput">State</label>
-                <input id="stateInput" placeholder="NY" required>
-              </div>
-              <div id="zipDiv">
-                <label id="zip" for="zipInput">Zip</label>
-                <input id="zipInput" placeholder="10001" required>
-              </div>
-            </div>
-        </form>
+<div id="shippingAddressDiv">
+      <div id="addressDiv">
+        <label id="address" for="addressInput">Address</label>
+        <input id="addressInput"placeholder="1234 Main St" required>
+      </div>
+      <div id="cityDiv">
+        <label id="city" for="cityInput">City</label>
+        <input id="cityInput" placeholder="New York" required>
+      </div>
+      <div id="stateDiv">
+        <label id="state" for="stateInput">State</label>
+        <input id="stateInput" placeholder="NY" required>
+      </div>
+      <div id="zipDiv">
+        <label id="zip" for="zipInput">Zip</label>
+        <input id="zipInput" placeholder="10001" required>
+      </div>
+</div>
 
        <br> <hr>
 
@@ -201,7 +199,7 @@
               </div>
               <div id="cvvDiv">
                 <label id="CVV" for="cvvInput">CVV</label>
-                <input type="password" id="cvvInput"required>
+                <input type="password" id="cvvInput" placeholder="321" required>
               </div>
               <button type="submit" id="FinalPurshass">Final The Purshass</button>
             </div>

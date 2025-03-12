@@ -37,6 +37,7 @@ router.post("/addOrder", async (req, res) => {
     itemsPrice,
     totalPrice,
     email,
+    status,
   } = req.body;
 
   const order = {
@@ -49,6 +50,7 @@ router.post("/addOrder", async (req, res) => {
     itemsPrice: itemsPrice,
     totalPrice: totalPrice,
     email: email,
+    status: status,
   };
 
   try {
@@ -92,6 +94,20 @@ router.post("/addOrder", async (req, res) => {
       .status(500)
       .json({ error: "Error adding order or sending email" });
   }
+});
+
+router.patch('/updateOrderStatus', async (req, res) => {
+  const { orderId, orderStatus } = req.body;
+
+  try {
+    await orderService.updateOrderStatus(orderId, orderStatus);
+    return res.status(200).json({ message: "Order status updated successfully" });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Error updating order status" });
+  }
+
 });
 
 module.exports = router;

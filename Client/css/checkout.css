@@ -388,7 +388,7 @@ a.navbarBtn{
   background-color: white;
 } 
 }
-#PaymentMethod{
+#PaymentMethod,#shippingAddressDiv,#mailAddress{
   padding: 2%;
   align-items: baseline;
   justify-items: stretch;
@@ -396,23 +396,23 @@ a.navbarBtn{
   flex-wrap: wrap;
   justify-content: space-between;
 }
-#nameDiv,#cardNumDiv,#expDiv,#cvvDiv{
+#nameDiv,#cardNumDiv,#expDiv,#cvvDiv,#addressDiv,#cityDiv,#stateDiv,#zipDiv,#mailDiv{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 2%;
   padding-left: 0;
 }
-#nameInput,#cartNumberInput,#expirationInput,#cvvInput{
+#nameInput,#cartNumberInput,#expirationInput,#emailInput,#addressInput,#cityInput,#stateInput,#zipInput,#cvvInput{
   border: none;
   background: rgb(216, 216, 216);
   border-radius: 4px;
   padding: 3%;
 }
-#nameInput::placeholder,#cartNumberInput::placeholder,#expirationInput::placeholder,#cvvInput::placeholder{
+#nameInput::placeholder,#cartNumberInput::placeholder,#expirationInput::placeholder,#emailInput::placeholder,#addressInput::placeholder,#cityInput::placeholder,#stateInput::placeholder,#zipInput::placeholder,#cvvInput::placeholder{
   color: black;
 }
-#titlePaymentMethode{
+#titlePaymentMethode,#titleShippingAddress,#titleMailAddress{
   margin-bottom: 0;
   padding: 2%;
 }
