@@ -55,7 +55,7 @@ async function displayOrders(orderItems) {
 
     orderCard.innerHTML = `
       <div class="order-header">
-        <h3>Order ID: ${order._id}</h3>
+        <h3 id='orderId'>Order ID: ${order._id}</h3>
         <h4>User: ${order.user}</h4>
         <h4>Shipping State: ${order.shippingState}</h4>
         <h4>Shipping City: ${order.shippingCity}</h4>
@@ -63,6 +63,16 @@ async function displayOrders(orderItems) {
         <h4>Email Address: ${order.email}</h4>
         <h4>Zip Code: ${order.shippingZipCode}</h4>
         <h4>Items Price: ${order.itemsPrice}$</h4>
+        <select id="orderStatus" class="order-status">
+          <option value="${order.orderStatus}" selected>${order.orderStatus}</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Processing">Processing</option>
+          <option value="Packed">Packed</option>
+          <option value="Ready to Ship">Ready to Ship</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+        <button id="buttonUpdateOrder" onclick="updateOrderStatus('${order._id}')">Update Order</button>
       </div>
       <div class="order-items">
         <h3>Order Items:</h3>
@@ -71,4 +81,19 @@ async function displayOrders(orderItems) {
 
     orderContainer.appendChild(orderCard);
   });
+}
+async function updateOrderStatus(id){
+  const orderId=id;
+  const orderStatus = document.getElementById("orderStatus").value;
+  fetch ("http://localhost:8080/orders/updateOrderStatus", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      orderId: orderId,
+      orderStatus: orderStatus,
+    })
+  })
+  alert("Order status updated successfully");
 }

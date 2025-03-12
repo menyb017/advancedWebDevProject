@@ -9,12 +9,12 @@ async function attributeToken(username) {
   const user = await dbUsers.collection('users').findOne({ username });
   const superAdmin = await dbUsers.collection('superAdmin').findOne({ username });
   if (superAdmin) {
-    const token = jwt.sign({ id: superAdmin._id, username: superAdmin.username ,role:superAdmin.role}, SECRET_KEY, { expiresIn: '1m' });
+    const token = jwt.sign({ id: superAdmin._id, username: superAdmin.username ,role:superAdmin.role}, SECRET_KEY, { expiresIn: '1h' });
     await dbUsers.collection('superAdmin').updateOne({ username }, { $set: { token } });
     return token;
   }
   if (user) {
-    const token = jwt.sign({ id: user._id, username: user.username,role:user.role }, SECRET_KEY, { expiresIn: '1m' });
+    const token = jwt.sign({ id: user._id, username: user.username,role:user.role }, SECRET_KEY, { expiresIn: '1h' });
     await dbUsers.collection('users').updateOne({ username }, { $set: { token } });
     return token;
   }

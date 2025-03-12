@@ -1,5 +1,6 @@
-const dbConnection = require("../dbConnection.js");
 
+const { ObjectId } = require("mongodb");
+const dbConnection = require("../dbConnection.js");
 const getAllOrders = async () => {
   const database = dbConnection.getDB();
   return await database.collection("Orders").find().toArray();
@@ -17,6 +18,7 @@ const addOrder = async (order) => {
     email: order.email,
     itemsPrice: order.itemsPrice,
     totalPrice: order.totalPrice,
+    orderStatus: order.status,
   });
 };
 
@@ -25,4 +27,13 @@ const deleteOrder = async (orderId) => {
   await database.collection("Orders").deleteOne({ orderId });
 };
 
-module.exports = { getAllOrders, addOrder, deleteOrder };
+async function updateOrderStatus(orderId, orderStatus) {
+  const database = dbConnection.getDB();
+
+  await database.collection("Orders").updateOne(
+    { _id: new ObjectId(orderId) },
+    { $set: { orderStatus: orderStatus } }
+  );
+}
+
+module.exports = { getAllOrders, addOrder, deleteOrder ,updateOrderStatus};

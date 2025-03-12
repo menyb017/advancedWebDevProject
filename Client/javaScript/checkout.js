@@ -357,7 +357,7 @@ function AddOrderToDb() {
   const shippingState = document.getElementById("stateInput").value;
   const shippingAddress = document.getElementById("addressInput").value;
   const shippingZipCode = document.getElementById("zipInput").value;
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("emailInput").value;
 
   const newOrder = {
     user: user,
@@ -369,6 +369,7 @@ function AddOrderToDb() {
     email: email,
     itemsPrice: orderItemsPrice,
     totalPrice: orderTotalPrice,
+    status:'New Order',
   };
 
   console.log("order", newOrder);
